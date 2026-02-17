@@ -44,3 +44,85 @@ probit_residual <- function(s) {
   logit_ref <- 1 / (1 + exp(-s * sd_diff_logit))
   pnorm(s) - logit_ref
 }
+
+
+# ── Core simulation engine ──────────────────────────────────────────────────
+#' Simulate choice probabilities from the temperature-identified Poisson count race
+#'
+#' @param v   Numeric vector of systematic utilities (length K)
+#' @param theta  Accumulation threshold (positive integer)
+#' @param beta   Temperature (noise scale)
+#' @param n_sim  Number of Monte Carlo draws
+#' @return Named numeric vector of estimated choice probabilities
+race_choice_probs <- function(v, theta, beta = 1, n_sim = 1e6) {
+  K <- length(v)
+  # Draw Gamma(theta, 1) for each alternative and each simulation
+  G <- matrix(rgamma(n_sim * K, shape = theta, rate = 1), nrow = n_sim, ncol = K)
+  # Standardised log-Gamma noise
+  mu_theta <- digamma(theta)
+  sd_theta <- sqrt(trigamma(theta))
+  Z <- (-log(G) + mu_theta) / sd_theta
+  # Temperature-identified utilities
+  U <- sweep(Z * beta, 2, v, "+")
+  # Choice = argmax
+  choices <- max.col(U, ties.method = "random")
+  tabulate(choices, nbins = K) / n_sim
+}
+
+#' Multinomial Logit (softmax) choice probabilities (exact)
+#'
+#' Under temperature identification with fixed beta, the Gumbel scale parameter
+#' is b = beta * sqrt(6) / pi, so the softmax inverse temperature is
+#' pi / (beta * sqrt(6)).
+#' @param v   Numeric vector of systematic utilities
+#' @param beta  Temperature
+#' @return Numeric vector of choice probabilities
+mnl_probs <- function(v, beta = 1) {
+  sigma_gumbel <- pi / sqrt(6)   # SD of Gumbel(0,1)
+  scaled <- v * sigma_gumbel / beta  # = v * pi / (beta * sqrt(6))
+  ev <- exp(scaled - max(scaled))
+  ev / sum(ev)
+}
+
+#' Multinomial Probit choice probabilities (Monte Carlo)
+#'
+#' Independent equal-variance Gaussian errors with scale beta.
+#' @param v   Numeric vector of systematic utilities
+#' @param beta  Temperature
+#' @param n_sim Number of Monte Carlo draws
+#' @return Numeric vector of estimated choice probabilities
+mnp_probs <- function(v, beta = 1, n_sim = 1e6) {
+  K <- length(v)
+  Z <- matrix(rnorm(n_sim * K), nrow = n_sim, ncol = K)
+  U <- sweep(Z * beta, 2, v, "+")
+  choices <- max.col(U, ties.method = "random")
+  tabulate(choices, nbins = K) / n_sim
+}
+
+#' Total variation distance between two probability vectors
+tv_dist <- function(p, q) 0.5 * sum(abs(p - q))
+
+
+# Helper: probit P(target) for symmetric case (1 target vs K-1 equal competitors)
+probit_target_prob <- function(v_t, beta, K) {
+  integrand <- function(z) dnorm(z) * pnorm(v_t / beta + z)^(K - 1)
+  integrate(integrand, -10, 10, rel.tol = 1e-10)$value
+}
+
+# Recover logit beta from observed P(target)
+recover_logit_beta <- function(p_target, v_t, K) {
+  if (p_target <= 1/K || p_target >= 1) return(NA_real_)
+  a <- log(p_target * (K - 1) / (1 - p_target))
+  if (a <= 0) return(NA_real_)
+  v_t * sigma_G / a
+}
+
+# Recover probit beta from observed P(target) via root-finding
+recover_probit_beta <- function(p_target, v_t, K) {
+  if (p_target <= 1/K || p_target >= 1) return(NA_real_)
+  f <- function(log_beta) probit_target_prob(v_t, exp(log_beta), K) - p_target
+  tryCatch({
+    root <- uniroot(f, interval = c(log(0.01), log(50)), tol = 1e-8)
+    exp(root$root)
+  }, error = function(e) NA_real_)
+}
