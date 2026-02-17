@@ -6,6 +6,13 @@ authors:
     corresponding: true
 bibliography: references.bib
 number-sections: true
+keywords:
+  - discrete choice
+  - random utility
+  - multinomial logit
+  - multinomial probit
+  - Poisson process
+  - evidence accumulation
 ---
 
 # Abstract
@@ -17,15 +24,15 @@ This study unifies the two canonical discrete choice specifications--Multinomial
 
 Discrete choice models based on Random Utility Theory (RUT) form a central pillar of mathematical psychology, econometrics, and cognitive science. Across these fields, it is common to assume that each alternative in a choice set elicits a latent scalar quantity--often interpreted as strength, utility, or evidence--and that observed choices arise from a comparison of these latent quantities under stochastic variability. Despite the diversity of substantive applications, two modeling traditions dominate this landscape: logit-based models, derived from Luce's choice axiom and extreme-value theory, and probit-based models, derived from Gaussian signal detection theory.
 
-The central question addressed in this paper is this: Can the two canonical random-utility discrete-choice specifications—multinomial logit and multinomial probit—be derived as limit cases of a single stochastic accumulation/race mechanism, so that the logitprobit relationship is explained by a unified generative process rather than by informal distributional similarity or variance matching?
+The central question addressed in this paper is this: Can the two canonical random-utility discrete-choice specifications—multinomial logit and multinomial probit—be derived as limit cases of a single stochastic accumulation/race mechanism, so that the logit–probit relationship is explained by a unified generative process rather than by informal distributional similarity or variance matching?
 
-The Multinomial Logit (MNL) model arises when stochastic variability is modeled via independent Gumbel (Type I Extreme Value) disturbances added to deterministic utilities. This specification is tightly linked to Luce's ratio-of-strengths axiom (Luce, 1959) and admits a well-known generative interpretation: if each alternative generates stochastic events according to an independent exponential clock, the probability that an alternative is chosen first is proportional to its rate. This exponential race interpretation has played a foundational role in mathematical psychology and economics, and it underlies a broad class of models including the Plackett--Luce ranking model and the "Gumbel--max trick" widely used in machine learning (McFadden, 1974; Yellott, 1977).
+The Multinomial Logit (MNL) model arises when stochastic variability is modeled via independent Gumbel (Type I Extreme Value) disturbances added to deterministic utilities. This specification is tightly linked to Luce's ratio-of-strengths axiom [@Luce1959] and admits a well-known generative interpretation: if each alternative generates stochastic events according to an independent exponential clock, the probability that an alternative is chosen first is proportional to its rate. This exponential race interpretation has played a foundational role in mathematical psychology and economics, and it underlies a broad class of models including the Plackett--Luce ranking model and the "Gumbel--max trick" widely used in machine learning [@McFadden1974; @Yellott1977].
 
-The Multinomial Probit (MNP) model, by contrast, assumes Gaussian noise on latent utilities and traces its lineage to Thurstone's theory of comparative judgment (Thurstone, 1927) and later developments in psychometrics and signal detection theory (Bock & Jones, 1968). Probit models are often motivated by appeal to aggregation, pooling, or measurement noise, and they offer greater flexibility in representing correlated disturbances across alternatives. Unlike logit, however, probit does not admit a simple closed-form choice rule, nor does it enjoy an equally canonical process-level interpretation.
+The Multinomial Probit (MNP) model, by contrast, assumes Gaussian noise on latent utilities and traces its lineage to Thurstone's theory of comparative judgment [@Thurstone1927] and later developments in psychometrics and signal detection theory [@BockJones1968]. Probit models are often motivated by appeal to aggregation, pooling, or measurement noise, and they offer greater flexibility in representing correlated disturbances across alternatives. Unlike logit, however, probit does not admit a simple closed-form choice rule, nor does it enjoy an equally canonical process-level interpretation.
 
 Although logit and probit are often treated as interchangeable in practice, their conceptual relationship remains surprisingly underdeveloped. It is well known that logistic and Gaussian cumulative distribution functions closely approximate one another under variance matching in binary choice tasks, and this observation is frequently cited to justify pragmatic model choice. Yet this numerical similarity is rarely given a deeper theoretical explanation. Instead, logit and probit are typically presented as competing assumptions about the distribution of unobserved utility noise, reflecting different historical traditions rather than different instantiations of a common mechanism.
 
-Recent work has renewed attention to this issue. Robinson et al. (2023) revisited the tension between Luce-based choice models and signal detection theory, applying a critical test of parameter invariance across changes in the number of alternatives ($m$). Their empirical analysis demonstrated that Gaussian signal detection parameters ($d'$) remained stable as the choice set size increased, whereas softmax parameters ($\beta$) exhibited systematic variance. While this diagnostic work highlights the superior generalization of Gaussian assumptions in certain memory tasks, it leaves open the generative question: is there a single mechanism that can account for both regimes?
+Recent work has renewed attention to this issue. @Robinson2023 revisited the tension between Luce-based choice models and signal detection theory, applying a critical test of parameter invariance across changes in the number of alternatives ($m$). Their empirical analysis demonstrated that Gaussian signal detection parameters ($d'$) remained stable as the choice set size increased, whereas softmax parameters ($\beta$) exhibited systematic variance. While this diagnostic work highlights the superior generalization of Gaussian assumptions in certain memory tasks, it leaves open the generative question: is there a single mechanism that can account for both regimes?
 
 The present work addresses this by shifting perspective. Rather than beginning with static assumptions about utility noise, this paper begins with a stochastic accumulation process and asks what class of random utility models it induces.
 
@@ -120,11 +127,11 @@ $$C = \arg \min_{i} T_i^{(\theta)}$$
 
 ## The Random Utility Representation
 
-The Gamma random variables may be standardized. Let $G_i \sim \text{Gamma}(\theta, 1)$ be i.i.d. random variables. Utilizing the scaling property of the Gamma distribution, the waiting times can be expressed as:
+Because the Poisson processes $N_1(t), \ldots, N_K(t)$ are mutually independent, the waiting times $T_1^{(\theta)}, \ldots, T_K^{(\theta)}$ are also mutually independent. By the scaling property of the Gamma distribution, each waiting time can be written as
 
 $$T_i^{(\theta)} \stackrel{d}{=} \frac{G_i}{\lambda_i}$$
 
-Consequently, the choice problem is formulated as:
+where $G_1, \ldots, G_K \stackrel{\text{i.i.d.}}{\sim} \text{Gamma}(\theta, 1)$ are mutually independent standard Gamma random variables. Consequently, the choice problem is formulated as:
 
 $$C = \arg \min_{i} \left( \frac{G_i}{\lambda_i} \right)$$
 
@@ -186,11 +193,13 @@ Here:
 
 # The Probit Limit ($\theta \to \infty$)
 
-This section investigates the asymptotic behavior of the temperature-identified model as the count threshold increases. It relies on the asymptotic normality of the log-transformed Gamma distribution.
+This section establishes the asymptotic behavior of the temperature-identified model as the count threshold increases.
 
-Intuitively, as the count threshold increases, the log-Gamma noise reflects the aggregation of many small stochastic increments, and Gaussian behavior emerges by the Central Limit Theorem.
+The key observation is that $G_i \sim \text{Gamma}(\theta, 1)$ can be decomposed as a sum of $\theta$ independent exponential random variables: $G_i = \sum_{j=1}^{\theta} E_{ij}$, where $E_{ij} \stackrel{\text{i.i.d.}}{\sim} \text{Exp}(1)$. By the law of large numbers, $G_i / \theta \xrightarrow{p} 1$ as $\theta \to \infty$. Applying the delta method with the function $g(x) = -\log(x)$, we obtain
 
-As $\theta \to \infty$:
+$$\sqrt{\theta}\,(-\log G_i - (-\log \theta)) \xrightarrow{d} \mathcal{N}\bigl(0,\, [g'(1)]^2\bigr) = \mathcal{N}(0, 1).$$
+
+Since the standardization $Z_i^{(\theta)} = (-\log G_i + \psi(\theta)) / \sqrt{\psi_1(\theta)}$ uses $\psi(\theta) \sim \log\theta - 1/(2\theta)$ and $\psi_1(\theta) \sim 1/\theta$, this is asymptotically equivalent. Therefore, as $\theta \to \infty$:
 
 $$Z_i^{(\theta)} \xrightarrow{d} \mathcal{N}(0, 1)$$
 
@@ -430,7 +439,7 @@ ggplot(df_probs, aes(x = theta, y = prob, color = alternative)) +
 
 ## Study 3: Set-Size Scaling
 
-A critical diagnostic for discriminating between logit and probit models is the effect of adding alternatives to the choice set (Robinson et al., 2023). Under MNL, the probability of choosing a target alternative with fixed utility is strictly determined by the ratio of its strength to the total strength. Under MNP, the scaling with set size differs because the probability of "winning" the maximum comparison depends on the shape of the noise distribution.
+A critical diagnostic for discriminating between logit and probit models is the effect of adding alternatives to the choice set [@Robinson2023]. Under MNL, the probability of choosing a target alternative with fixed utility is strictly determined by the ratio of its strength to the total strength. Under MNP, the scaling with set size differs because the probability of "winning" the maximum comparison depends on the shape of the noise distribution.
 
 I fix a target alternative with utility $v_\text{target} = 1$ and add $K - 1$ equal competitors, each with utility $v_\text{comp} = 0$. As $K$ grows, I track the probability of choosing the target.
 
@@ -609,13 +618,13 @@ p1 + p2 + plot_layout(widths = c(1, 1))
 
 ## Study 5: Parameter Invariance Across Set Size
 
-A key empirical diagnostic for distinguishing between logit and probit is parameter invariance across changes in set size $K$ (Robinson et al., 2023). If choice data are generated by a logit model, the softmax inverse temperature $\beta_{\text{logit}}$ recovered from fitting a logit specification should remain constant as $K$ increases. Conversely, if the data follow a probit model, the Gaussian noise scale $\beta_{\text{probit}}$ should be invariant to $K$.
+A key empirical diagnostic for distinguishing between logit and probit is parameter invariance across changes in set size $K$ [@Robinson2023]. If choice data are generated by a logit model, the softmax inverse temperature $\beta_{\text{logit}}$ recovered from fitting a logit specification should remain constant as $K$ increases. Conversely, if the data follow a probit model, the Gaussian noise scale $\beta_{\text{probit}}$ should be invariant to $K$.
 
 I test this directly. For each value of $\theta$ and each set size $K$ (with a target at $v = 1$ vs.\ $K-1$ equal competitors at $v = 0$), I compute the "true" choice probability $P(\text{target})$ from the race model and then recover the best-fitting logit and probit temperature parameters by inversion.
 
 ```{r}
 #| label: fig-parameter-recovery
-#| fig-cap: "Recovered temperature parameters under logit (left) and probit (right) model assumptions, plotted as a function of set size K. Each line corresponds to a different accumulation threshold θ. At θ = 1 (exact logit), the recovered logit parameter is invariant to K, while the recovered probit parameter drifts. At large θ (approaching probit), the pattern reverses: the probit parameter is stable while the logit parameter varies. This directly parallels the empirical diagnostic of Robinson et al. (2023)."
+#| fig-cap: "Recovered temperature parameters under logit (left) and probit (right) model assumptions, plotted as a function of set size K. Each line corresponds to a different accumulation threshold θ. At θ = 1 (exact logit), the recovered logit parameter is invariant to K, while the recovered probit parameter drifts. At large θ (approaching probit), the pattern reverses: the probit parameter is stable while the logit parameter varies. This directly parallels the empirical diagnostic of @Robinson2023."
 #| fig-height: 5
 #| fig-width: 10
 
@@ -827,11 +836,11 @@ These multinomial simulations confirm and extend the binary-case results:
 
 2. **Probability redistribution**: As $\theta$ increases, the probit model concentrates more probability on the best alternative and less on inferior alternatives, reflecting the thinner tails of Gaussian noise relative to Gumbel.
 
-3. **Set-size scaling**: The logit and probit models predict systematically different scaling of target choice probability with the number of competitors. The Poisson count race interpolates between these two patterns, connecting to the empirical findings of Robinson et al. (2023).
+3. **Set-size scaling**: The logit and probit models predict systematically different scaling of target choice probability with the number of competitors. The Poisson count race interpolates between these two patterns, connecting to the empirical findings of @Robinson2023.
 
 4. **IIA erosion**: The Independence of Irrelevant Alternatives property, which holds exactly at $\theta = 1$, is progressively violated as $\theta$ increases. This provides a process-level account of why IIA holds for logit but not probit: it is a consequence of the Gumbel noise shape, and alternative noise shapes—induced by higher accumulation thresholds—do not preserve it.
 
-5. **Parameter invariance**: When choice data generated by the Poisson count race are fit under a logit assumption, the recovered inverse temperature drifts with set size $K$ for all $\theta > 1$. Conversely, when fit under a probit assumption, the recovered noise scale remains stable for large $\theta$ but drifts when $\theta$ is small. This cross-over in parameter invariance provides a process-level account of the empirical findings of Robinson et al. (2023): parameter stability across $K$ is diagnostic of whether the effective noise distribution is closer to Gumbel or Gaussian.
+5. **Parameter invariance**: When choice data generated by the Poisson count race are fit under a logit assumption, the recovered inverse temperature drifts with set size $K$ for all $\theta > 1$. Conversely, when fit under a probit assumption, the recovered noise scale remains stable for large $\theta$ but drifts when $\theta$ is small. This cross-over in parameter invariance provides a process-level account of the empirical findings of @Robinson2023: parameter stability across $K$ is diagnostic of whether the effective noise distribution is closer to Gumbel or Gaussian.
 
 6. **Noise shape transition**: The underlying mechanism is a smooth transition in the shape of the standardised noise distribution, from the skewed Gumbel ($\theta = 1$) to the symmetric Gaussian ($\theta \to \infty$). The skewness and kurtosis decay at known rates, providing analytic control over the approximation quality.
 
@@ -854,7 +863,7 @@ This synthesis clarifies why logit and probit models often behave similarly in p
 
 Importantly, the present model should not be conflated with full sequential sampling models such as the Diffusion Decision Model or Linear Ballistic Accumulator. Those models are designed to jointly account for response times and accuracy and typically involve continuous accumulation with explicit drift and boundary parameters. The Poisson count race, by contrast, is deliberately minimal: it uses accumulation as a generative device to induce a family of random utility models, without making claims about within-trial dynamics or response time distributions. In this sense, it occupies an intermediate position between static random utility formulations and full dynamical decision models.
 
-A closely related work is the dependent Poisson race model of Ruan et al. (2008), who develop a thresholded accumulation process for binary conjoint choice. In their model, discrete Poisson “hits” accrue until a fixed integer threshold is reached, and dependence between alternatives is introduced via shared Poisson components tied to overlapping attributes. Their primary contribution is behavioral and statistical: modeling dominance and similarity effects in conjoint choice and improving predictive performance relative to independent race models and multinomial logit.
+A closely related work is the dependent Poisson race model of @Ruan2008, who develop a thresholded accumulation process for binary conjoint choice. In their model, discrete Poisson “hits” accrue until a fixed integer threshold is reached, and dependence between alternatives is introduced via shared Poisson components tied to overlapping attributes. Their primary contribution is behavioral and statistical: modeling dominance and similarity effects in conjoint choice and improving predictive performance relative to independent race models and multinomial logit.
 
 The present work overlaps with this literature in its use of Poisson accumulation and thresholded stopping rules. In particular, I do not claim novelty in the observation that the classical exponential race underlying Luce’s choice axiom corresponds to a single-event threshold, nor in the existence of thresholded Poisson race models more generally.
 
