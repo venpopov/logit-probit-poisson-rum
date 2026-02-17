@@ -10,7 +10,7 @@ number-sections: true
 
 # Abstract
 
-This study unifies the two canonical discrete choice specifications--Multinomial Logit and Multinomial Probit--within a single generative framework. We introduce a **Poisson Count Race**, wherein $K$ independent alternatives generate events according to Poisson processes. A choice is determined when an alternative reaches a specific cumulative count threshold, $\theta$. We demonstrate that at the threshold $\theta=1$, the model yields the Multinomial Logit (Luce choice rule). By normalizing the utility noise to maintain a constant variance--a process termed temperature identification--we show that as $\theta \to \infty$, the model converges to the Multinomial Probit. This formulation provides a parametric bridge in which $\theta$ governs the shape of the error distribution and a separate parameter, $\beta$, modulates the temperature.
+This study unifies the two canonical discrete choice specifications--Multinomial Logit and Multinomial Probit--within a single generative framework. We introduce a **Poisson Count Race**, wherein $K$ alternatives generate events according to independent Poisson processes. A choice is determined when an alternative reaches a specific cumulative count threshold, $\theta$. We demonstrate that at the threshold $\theta=1$, the model yields the Multinomial Logit (Luce choice rule). By normalizing the utility noise to maintain a constant variance--a process termed temperature identification--we show that as $\theta \to \infty$, the model converges to the Multinomial Probit. This formulation provides a parametric bridge in which $\theta$ governs the shape of the error distribution and a separate parameter, $\beta$, modulates the temperature. Crucially, this bridge arises from a single stochastic accumulation mechanism rather than from post hoc variance matching between distinct models.
 
 
 # Introduction
@@ -25,15 +25,21 @@ Although logit and probit are often treated as interchangeable in practice, thei
 
 Recent work has renewed attention to this issue. Robinson et al. (2023) revisited the tension between Luce-based choice models and signal detection theory, applying a critical test of parameter invariance across changes in the number of alternatives ($m$). Their empirical analysis demonstrated that Gaussian signal detection parameters ($d'$) remained stable as the choice set size increased, whereas softmax parameters ($\beta$) exhibited systematic variance. While this diagnostic work highlights the superior generalization of Gaussian assumptions in certain memory tasks, it leaves open the generative question: is there a single mechanism that can account for both regimes?
 
+However, this work compares fixed model classes rather than deriving them from a common generative mechanism.
+
 The present work addresses this by shifting perspective. Rather than beginning with static assumptions about utility noise, we begin with a stochastic accumulation process and ask what class of random utility models it induces.
 
 ## A stochastic accumulation perspective
 
 We introduce a **Poisson count race**, a simple generative model in which each alternative produces stochastic events over time according to an independent Poisson process. A decision is made when one alternative reaches a fixed cumulative count threshold, denoted by $\theta$. The threshold $\theta$ thus controls how much stochastic evidence must be accumulated before commitment.
 
+Psychologically, $\theta$ can be interpreted as a commitment criterion or decision caution parameter: higher thresholds require more accumulated events before choice.
+
 This construction generalizes the classical exponential race in a minimal way. When $\theta = 1$, the model reduces exactly to the familiar exponential race, recovering Luce's choice rule and the Multinomial Logit model without approximation. For $\theta > 1$, choice depends not on the first event, but on the time required to accumulate multiple events, introducing a new degree of freedom into the stochastic mechanism.
 
 Crucially, the Poisson count race admits an exact Random Utility representation. The waiting time for an alternative to reach $\theta$ events follows a Gamma (Erlang) distribution, and comparing these waiting times is equivalent to comparing latent utilities composed of a deterministic component and a stochastic component with a log-Gamma distribution. Varying the threshold $\theta$ therefore induces a one-parameter family of random utility models with a shared systematic utility but systematically varying noise distributions.
+
+Although the Poisson count race is an accumulation process, the present work does not aim to model response times or trial-by-trial dynamics. Instead, accumulation is used here as a generative device for inducing a family of random utility models with interpretable noise structure.
 
 ## Noise scale, noise shape, and identification
 
@@ -151,7 +157,8 @@ Therefore, when $\theta=1$, the noise terms $\epsilon_i^{(1)}$ are i.i.d. Gumbel
 
 $$\Pr(C=i) = \frac{\exp(v_i)}{\sum_{j=1}^K \exp(v_j)} = \frac{\lambda_i}{\sum_{j=1}^K \lambda_j}$$
 
-**Result 1:** The Poisson race with threshold $\theta=1$ corresponds exactly to the Luce Choice Rule (Softmax). This is a classic well know derivation.
+**Result 1:** The Poisson race with threshold $\theta=1$ corresponds exactly to the Luce Choice Rule (Softmax). This is a classic, well-known derivation.
+
 
 # Temperature Identification
 
@@ -161,7 +168,7 @@ $$\begin{aligned} \mathbb{E}[\epsilon^{(\theta)}] &= -\psi(\theta) \\ \text{Var}
 
 where $\psi(\cdot)$ denotes the digamma function and $\psi_1(\cdot)$ the trigamma function.
 
-As $\theta \to \infty$, $\psi_1(\theta) \approx 1/\theta \to 0$. In the absence of standardization, the model becomes deterministic as the stochastic noise vanishes. To facilitate comparison of error "shapes" across varying $\theta$ values, a consistent scale must be enforced. This process is referred to as **Temperature Identification**.
+As $\theta \to \infty$, $\psi_1(\theta) \approx 1/\theta \to 0$. In the absence of standardization, the model becomes deterministic as the stochastic noise vanishes. To facilitate comparison of error "shapes" across varying $\theta$ values, a consistent scale must be enforced. This process is referred to as **Temperature Identification**. Unlike conventional scale normalization, this identification preserves non-degenerate choice behavior as $\theta$ increases, allowing the large-$\theta$ limit to be meaningfully interpreted.
 
 We define the standardized noise term $Z_i^{(\theta)}$ such that it possesses zero mean and unit variance for all $\theta$:
 
@@ -180,6 +187,8 @@ Here:
 # The Probit Limit ($\theta \to \infty$)
 
 This section investigates the asymptotic behavior of the temperature-identified model as the count threshold increases. We rely on the asymptotic normality of the log-transformed Gamma distribution.
+
+Intuitively, as the count threshold increases, the log-Gamma noise reflects the aggregation of many small stochastic increments, and Gaussian behavior emerges by the Central Limit Theorem.
 
 As $\theta \to \infty$:
 
@@ -205,7 +214,7 @@ The derivation presented herein establishes the Poisson Count Race as a flexible
 
 3. $\theta \to \infty$**:** **Probit** (Gaussian errors).
 
-This result suggests that the distinction between Logit and Probit may be viewed not as a fundamental difference in error philosophy, but rather as a difference in the accumulation threshold of the underlying evidence process.
+This result suggests that the distinction between Logit and Probit may be viewed not as a fundamental difference in error philosophy, but rather as a difference in the stopping rule governing an underlying stochastic accumulation process.
 
 # Discussion
 
