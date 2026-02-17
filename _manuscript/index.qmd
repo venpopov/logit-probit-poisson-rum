@@ -45,7 +45,7 @@ The central question addressed in this paper is this: Can the two canonical rand
 
 ## Model overview
 
-I introduce a **Poisson count race**, wherein each alternative generates stochastic events via an independent Poisson process. A decision is made when one alternative reaches a cumulative count threshold $\theta$. The threshold $\theta$ thus controls how much stochastic evidence must be accumulated before commitment.
+I build on a **Poisson count race** (e.g., Pike, 1973; Townsend & Ashby, 1983; Smith & Van Zandt, 2000), wherein each alternative generates stochastic events via an independent Poisson process. A decision is made when one alternative reaches a cumulative count threshold $\theta$. The threshold $\theta$ thus controls how much stochastic evidence must be accumulated before commitment.
 
 To compare noise *shape* across $\theta$ independently of noise *scale*, I introduce a **temperature identification** that standardizes the stochastic utility component to unit variance for all $\theta$, with a separate parameter $\beta$ controlling the overall magnitude of stochasticity. With this normalization, we can establish three main results: 
 
@@ -54,6 +54,10 @@ To compare noise *shape* across $\theta$ independently of noise *scale*, I intro
 3. As $\theta \to \infty$ under temperature identification, the model converges to the Multinomial Probit. 
 
 From this perspective, the familiar distinction between logit and probit reflects differences in the stopping rule governing an evidence accumulation process, rather than fundamentally distinct assumptions about decision noise. Extreme-value behavior and Gaussian behavior arise naturally as endpoint regimes of the same stochastic system.
+
+While Poisson counter models have a rich history in mathematical psychology—particularly as accounts of response time distributions under time-varying evidence rates (e.g., Pike, 1973; Townsend & Ashby, 1983; Smith & Van Zandt, 2000) - they have rarely been invoked to address the theoretical relationship between *static* discrete choice models. Smith and Van Zandt (2000) showed that Poisson races yield choice probabilities governed by the incomplete Beta function, but their analysis focused on relatively small integer thresholds $\theta \approx 5\text{–}10$ chosen to capture reaction-time skewness.
+
+The present work takes a different perspective. Rather than treating the threshold as a fixed descriptive parameter, we examine the asymptotic behavior of the Poisson count race as $\theta \to \infty$ under variance-preserving (temperature) identification. This shift in emphasis reveals that the Poisson race is not merely a model of latency, but a generative mechanism that continuously interpolates between the two canonical pillars of discrete choice: Multinomial Logit $\theta = 1$ and Multinomial Probit $\theta \to \infty$.
 
 The remainder of the paper formalizes this framework, presents simulations illustrating the interpolation between regimes, and discusses implications for discrete choice modeling.
 
