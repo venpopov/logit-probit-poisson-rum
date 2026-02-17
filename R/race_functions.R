@@ -111,6 +111,7 @@ probit_target_prob <- function(v_t, beta, K) {
 
 # Recover logit beta from observed P(target)
 recover_logit_beta <- function(p_target, v_t, K) {
+  sigma_G <- pi / sqrt(6)
   if (p_target <= 1/K || p_target >= 1) return(NA_real_)
   a <- log(p_target * (K - 1) / (1 - p_target))
   if (a <= 0) return(NA_real_)

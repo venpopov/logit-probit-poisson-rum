@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="keywords" content="discrete choice, random utility, multinomial logit, multinomial probit, Poisson process, evidence accumulation">
 
 <title>A Poisson Count Race as a Generative Bridge Between Logit and Probit Choice</title>
 <style>
@@ -20,7 +21,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -70,9 +91,16 @@ window.Quarto = {
 </script>
 
 <meta name="citation_title" content="A Poisson Count Race as a Generative Bridge Between Logit and Probit Choice">
+<meta name="citation_keywords" content="discrete choice,random utility,multinomial logit,multinomial probit,Poisson process,evidence accumulation">
 <meta name="citation_author" content="Vencislav Popov">
 <meta name="citation_language" content="en">
-<meta name="citation_reference" content="citation_title=Literate programming;,citation_author=Donald E. Knuth;,citation_publication_date=1984-05;,citation_cover_date=1984-05;,citation_year=1984;,citation_fulltext_html_url=https://doi.org/10.1093/comjnl/27.2.97;,citation_issue=2;,citation_doi=10.1093/comjnl/27.2.97;,citation_issn=0010-4620;,citation_volume=27;,citation_journal_title=Comput. J.;,citation_publisher=Oxford University Press, Inc.;">
+<meta name="citation_reference" content="citation_title=Individual choice behavior: A theoretical analysis;,citation_author=R. Duncan Luce;,citation_publication_date=1959;,citation_cover_date=1959;,citation_year=1959;">
+<meta name="citation_reference" content="citation_title=Conditional logit analysis of qualitative choice behavior;,citation_author=Daniel McFadden;,citation_editor=P. Zarembka;,citation_publication_date=1974;,citation_cover_date=1974;,citation_year=1974;,citation_journal_title=Frontiers in Econometrics;,citation_publisher=Academic Press;">
+<meta name="citation_reference" content="citation_title=The relationship between Luce’s choice axiom, Thurstone’s theory of comparative judgment, and the double exponential distribution;,citation_author=John I. Yellott;,citation_publication_date=1977;,citation_cover_date=1977;,citation_year=1977;,citation_issue=2;,citation_doi=10.1016/0022-2496(77)90026-8;,citation_volume=15;,citation_journal_title=Journal of Mathematical Psychology;">
+<meta name="citation_reference" content="citation_title=A law of comparative judgment;,citation_author=L. L. Thurstone;,citation_publication_date=1927;,citation_cover_date=1927;,citation_year=1927;,citation_issue=4;,citation_doi=10.1037/h0070288;,citation_volume=34;,citation_journal_title=Psychological Review;">
+<meta name="citation_reference" content="citation_title=The measurement and prediction of judgment and choice;,citation_author=R. Darrell Bock;,citation_author=Lyle V. Jones;,citation_publication_date=1968;,citation_cover_date=1968;,citation_year=1968;">
+<meta name="citation_reference" content="citation_title=Are visual working memory representations abstract? A critical test with signal detection and Luce’s choice rule;,citation_author=Maria M. Robinson;,citation_author=John Clevenger;,citation_author=David E. Irwin;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_issue=4;,citation_doi=10.1037/rev0000411;,citation_volume=130;,citation_journal_title=Psychological Review;">
+<meta name="citation_reference" content="citation_title=The dependent poisson race model and modeling dependence in conjoint choice experiments;,citation_author=Shiling Ruan;,citation_author=Steven N. MacEachern;,citation_author=Thomas Otter;,citation_author=Angela M. Dean;,citation_publication_date=2008;,citation_cover_date=2008;,citation_year=2008;,citation_issue=2;,citation_doi=10.1007/s11336-007-9032-x;,citation_volume=73;,citation_journal_title=Psychometrika;">
 </head>
 
 <body class="quarto-light">
@@ -112,6 +140,12 @@ window.Quarto = {
     </div>
 
 
+    <div>
+      <div class="keywords">
+        <div class="block-title">Keywords</div>
+        <p>discrete choice, random utility, multinomial logit, multinomial probit, Poisson process, evidence accumulation</p>
+      </div>
+    </div>
 
     <div class="quarto-other-links-text-target">
     </div>  </div>
@@ -127,7 +161,6 @@ window.Quarto = {
   <li><a href="#a-stochastic-accumulation-perspective" id="toc-a-stochastic-accumulation-perspective" class="nav-link" data-scroll-target="#a-stochastic-accumulation-perspective"><span class="header-section-number">2.1</span> A stochastic accumulation perspective</a></li>
   <li><a href="#noise-scale-noise-shape-and-identification" id="toc-noise-scale-noise-shape-and-identification" class="nav-link" data-scroll-target="#noise-scale-noise-shape-and-identification"><span class="header-section-number">2.2</span> Noise scale, noise shape, and identification</a></li>
   <li><a href="#logit-and-probit-as-endpoint-regimes" id="toc-logit-and-probit-as-endpoint-regimes" class="nav-link" data-scroll-target="#logit-and-probit-as-endpoint-regimes"><span class="header-section-number">2.3</span> Logit and probit as endpoint regimes</a></li>
-  <li><a href="#contribution-and-overview" id="toc-contribution-and-overview" class="nav-link" data-scroll-target="#contribution-and-overview"><span class="header-section-number">2.4</span> Contribution and overview</a></li>
   </ul></li>
   <li><a href="#formal-statement-of-random-utility-models" id="toc-formal-statement-of-random-utility-models" class="nav-link" data-scroll-target="#formal-statement-of-random-utility-models"><span class="header-section-number">3</span> Formal statement of random utility models</a></li>
   <li><a href="#the-generative-model-a-poisson-count-race" id="toc-the-generative-model-a-poisson-count-race" class="nav-link" data-scroll-target="#the-generative-model-a-poisson-count-race"><span class="header-section-number">4</span> The Generative Model: A Poisson Count Race</a>
@@ -138,27 +171,24 @@ window.Quarto = {
   <li><a href="#the-logit-boundary-theta-1" id="toc-the-logit-boundary-theta-1" class="nav-link" data-scroll-target="#the-logit-boundary-theta-1"><span class="header-section-number">5</span> The Logit Boundary (<span class="math inline">\(\theta = 1\)</span>)</a></li>
   <li><a href="#temperature-identification" id="toc-temperature-identification" class="nav-link" data-scroll-target="#temperature-identification"><span class="header-section-number">6</span> Temperature Identification</a></li>
   <li><a href="#the-probit-limit-theta-to-infty" id="toc-the-probit-limit-theta-to-infty" class="nav-link" data-scroll-target="#the-probit-limit-theta-to-infty"><span class="header-section-number">7</span> The Probit Limit (<span class="math inline">\(\theta \to \infty\)</span>)</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">8</span> Summary</a></li>
-  <li><a href="#simulation-studies-binary-choice" id="toc-simulation-studies-binary-choice" class="nav-link" data-scroll-target="#simulation-studies-binary-choice"><span class="header-section-number">9</span> Simulation Studies: Binary Choice</a></li>
-  <li><a href="#simulation-studies-multinomial-k-alternative-choice" id="toc-simulation-studies-multinomial-k-alternative-choice" class="nav-link" data-scroll-target="#simulation-studies-multinomial-k-alternative-choice"><span class="header-section-number">10</span> Simulation Studies: Multinomial K-alternative Choice</a>
+  <li><a href="#simulation-studies-binary-choice" id="toc-simulation-studies-binary-choice" class="nav-link" data-scroll-target="#simulation-studies-binary-choice"><span class="header-section-number">8</span> Simulation Studies: Binary Choice</a></li>
+  <li><a href="#simulation-studies-multinomial-k-alternative-choice" id="toc-simulation-studies-multinomial-k-alternative-choice" class="nav-link" data-scroll-target="#simulation-studies-multinomial-k-alternative-choice"><span class="header-section-number">9</span> Simulation Studies: Multinomial K-alternative Choice</a>
   <ul class="collapse">
-  <li><a href="#study-1-convergence-to-probit" id="toc-study-1-convergence-to-probit" class="nav-link" data-scroll-target="#study-1-convergence-to-probit"><span class="header-section-number">10.1</span> Study 1: Convergence to Probit</a></li>
-  <li><a href="#study-2-choice-probability-vectors" id="toc-study-2-choice-probability-vectors" class="nav-link" data-scroll-target="#study-2-choice-probability-vectors"><span class="header-section-number">10.2</span> Study 2: Choice Probability Vectors</a></li>
-  <li><a href="#study-3-set-size-scaling" id="toc-study-3-set-size-scaling" class="nav-link" data-scroll-target="#study-3-set-size-scaling"><span class="header-section-number">10.3</span> Study 3: Set-Size Scaling</a></li>
-  <li><a href="#study-4-independence-of-irrelevant-alternatives" id="toc-study-4-independence-of-irrelevant-alternatives" class="nav-link" data-scroll-target="#study-4-independence-of-irrelevant-alternatives"><span class="header-section-number">10.4</span> Study 4: Independence of Irrelevant Alternatives</a></li>
-  <li><a href="#study-5-parameter-invariance-across-set-size" id="toc-study-5-parameter-invariance-across-set-size" class="nav-link" data-scroll-target="#study-5-parameter-invariance-across-set-size"><span class="header-section-number">10.5</span> Study 5: Parameter Invariance Across Set Size</a></li>
-  <li><a href="#study-6-distributional-shape-noise-skewness-and-kurtosis" id="toc-study-6-distributional-shape-noise-skewness-and-kurtosis" class="nav-link" data-scroll-target="#study-6-distributional-shape-noise-skewness-and-kurtosis"><span class="header-section-number">10.6</span> Study 6: Distributional Shape — Noise Skewness and Kurtosis</a></li>
-  <li><a href="#study-7-robustness-across-utility-structures" id="toc-study-7-robustness-across-utility-structures" class="nav-link" data-scroll-target="#study-7-robustness-across-utility-structures"><span class="header-section-number">10.7</span> Study 7: Robustness Across Utility Structures</a></li>
-  <li><a href="#summary-1" id="toc-summary-1" class="nav-link" data-scroll-target="#summary-1"><span class="header-section-number">10.8</span> Summary</a></li>
+  <li><a href="#study-1-convergence-to-probit" id="toc-study-1-convergence-to-probit" class="nav-link" data-scroll-target="#study-1-convergence-to-probit"><span class="header-section-number">9.1</span> Study 1: Convergence to Probit</a></li>
+  <li><a href="#study-2-choice-probability-vectors" id="toc-study-2-choice-probability-vectors" class="nav-link" data-scroll-target="#study-2-choice-probability-vectors"><span class="header-section-number">9.2</span> Study 2: Choice Probability Vectors</a></li>
+  <li><a href="#study-3-set-size-scaling" id="toc-study-3-set-size-scaling" class="nav-link" data-scroll-target="#study-3-set-size-scaling"><span class="header-section-number">9.3</span> Study 3: Set-Size Scaling</a></li>
+  <li><a href="#study-4-independence-of-irrelevant-alternatives" id="toc-study-4-independence-of-irrelevant-alternatives" class="nav-link" data-scroll-target="#study-4-independence-of-irrelevant-alternatives"><span class="header-section-number">9.4</span> Study 4: Independence of Irrelevant Alternatives</a></li>
+  <li><a href="#study-5-parameter-invariance-across-set-size" id="toc-study-5-parameter-invariance-across-set-size" class="nav-link" data-scroll-target="#study-5-parameter-invariance-across-set-size"><span class="header-section-number">9.5</span> Study 5: Parameter Invariance Across Set Size</a></li>
+  <li><a href="#study-6-distributional-shape-noise-skewness-and-kurtosis" id="toc-study-6-distributional-shape-noise-skewness-and-kurtosis" class="nav-link" data-scroll-target="#study-6-distributional-shape-noise-skewness-and-kurtosis"><span class="header-section-number">9.6</span> Study 6: Distributional Shape — Noise Skewness and Kurtosis</a></li>
+  <li><a href="#study-7-robustness-across-utility-structures" id="toc-study-7-robustness-across-utility-structures" class="nav-link" data-scroll-target="#study-7-robustness-across-utility-structures"><span class="header-section-number">9.7</span> Study 7: Robustness Across Utility Structures</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9.8</span> Summary</a></li>
   </ul></li>
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">11</span> Discussion</a>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">10</span> Discussion</a>
   <ul class="collapse">
-  <li><a href="#relation-to-existing-choice-models" id="toc-relation-to-existing-choice-models" class="nav-link" data-scroll-target="#relation-to-existing-choice-models"><span class="header-section-number">11.1</span> Relation to existing choice models</a></li>
-  <li><a href="#temperature-identification-and-model-comparison" id="toc-temperature-identification-and-model-comparison" class="nav-link" data-scroll-target="#temperature-identification-and-model-comparison"><span class="header-section-number">11.2</span> Temperature identification and model comparison</a></li>
-  <li><a href="#intermediate-regimes-and-log-gamma-utility-noise" id="toc-intermediate-regimes-and-log-gamma-utility-noise" class="nav-link" data-scroll-target="#intermediate-regimes-and-log-gamma-utility-noise"><span class="header-section-number">11.3</span> Intermediate regimes and log-Gamma utility noise</a></li>
-  <li><a href="#implications-for-empirical-modeling" id="toc-implications-for-empirical-modeling" class="nav-link" data-scroll-target="#implications-for-empirical-modeling"><span class="header-section-number">11.4</span> Implications for empirical modeling</a></li>
-  <li><a href="#limitations-and-extensions" id="toc-limitations-and-extensions" class="nav-link" data-scroll-target="#limitations-and-extensions"><span class="header-section-number">11.5</span> Limitations and extensions</a></li>
-  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks"><span class="header-section-number">11.6</span> Concluding remarks</a></li>
+  <li><a href="#relation-to-existing-models" id="toc-relation-to-existing-models" class="nav-link" data-scroll-target="#relation-to-existing-models"><span class="header-section-number">10.1</span> Relation to existing models</a></li>
+  <li><a href="#implications-for-empirical-modeling" id="toc-implications-for-empirical-modeling" class="nav-link" data-scroll-target="#implications-for-empirical-modeling"><span class="header-section-number">10.2</span> Implications for empirical modeling</a></li>
+  <li><a href="#limitations-and-extensions" id="toc-limitations-and-extensions" class="nav-link" data-scroll-target="#limitations-and-extensions"><span class="header-section-number">10.3</span> Limitations and extensions</a></li>
+  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks"><span class="header-section-number">10.4</span> Concluding remarks</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li></ul></div></nav>
@@ -174,20 +204,20 @@ window.Quarto = {
 
 <section id="abstract" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Abstract</h1>
-<p>This study unifies the two canonical discrete choice specifications–Multinomial Logit and Multinomial Probit–within a single generative framework. We introduce a <strong>Poisson Count Race</strong>, wherein <span class="math inline">\(K\)</span> alternatives generate events according to independent Poisson processes. A choice is determined when an alternative reaches a specific cumulative count threshold, <span class="math inline">\(\theta\)</span>. We demonstrate that at the threshold <span class="math inline">\(\theta=1\)</span>, the model yields the Multinomial Logit (Luce choice rule). By normalizing the utility noise to maintain a constant variance–a process termed temperature identification–we show that as <span class="math inline">\(\theta \to \infty\)</span>, the model converges to the Multinomial Probit. This formulation provides a parametric bridge in which <span class="math inline">\(\theta\)</span> governs the shape of the error distribution and a separate parameter, <span class="math inline">\(\beta\)</span>, modulates the temperature. Crucially, this bridge arises from a single stochastic accumulation mechanism rather than from post hoc variance matching between distinct models.</p>
+<p>This study unifies the two canonical discrete choice specifications–Multinomial Logit and Multinomial Probit–within a single generative framework. I introduce a <strong>Poisson Count Race</strong>, wherein <span class="math inline">\(K\)</span> alternatives generate events according to independent Poisson processes. A choice is determined when an alternative reaches a specific cumulative count threshold, <span class="math inline">\(\theta\)</span>. At the threshold <span class="math inline">\(\theta=1\)</span>, the model yields the Multinomial Logit (Luce choice rule). By normalizing the utility noise to maintain a constant variance–a process termed temperature identification–I show that as <span class="math inline">\(\theta \to \infty\)</span>, the model converges to the Multinomial Probit. This formulation provides a parametric bridge in which <span class="math inline">\(\theta\)</span> governs the shape of the error distribution and a separate parameter, <span class="math inline">\(\beta\)</span>, modulates the temperature. Crucially, this bridge arises from a single stochastic accumulation mechanism rather than from post hoc variance matching between distinct models.</p>
 </section>
 <section id="introduction" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Introduction</h1>
 <p>Discrete choice models based on Random Utility Theory (RUT) form a central pillar of mathematical psychology, econometrics, and cognitive science. Across these fields, it is common to assume that each alternative in a choice set elicits a latent scalar quantity–often interpreted as strength, utility, or evidence–and that observed choices arise from a comparison of these latent quantities under stochastic variability. Despite the diversity of substantive applications, two modeling traditions dominate this landscape: logit-based models, derived from Luce’s choice axiom and extreme-value theory, and probit-based models, derived from Gaussian signal detection theory.</p>
-<p>The central question addressed in this paper is this: Can the two canonical random-utility discrete-choice specifications—multinomial logit and multinomial probit—be derived as limit cases of a single stochastic accumulation/race mechanism, so that the logitprobit relationship is explained by a unified generative process rather than by informal distributional similarity or variance matching?</p>
-<p>The Multinomial Logit (MNL) model arises when stochastic variability is modeled via independent Gumbel (Type I Extreme Value) disturbances added to deterministic utilities. This specification is tightly linked to Luce’s ratio-of-strengths axiom (Luce, 1959) and admits a well-known generative interpretation: if each alternative generates stochastic events according to an independent exponential clock, the probability that an alternative is chosen first is proportional to its rate. This exponential race interpretation has played a foundational role in mathematical psychology and economics, and it underlies a broad class of models including the Plackett–Luce ranking model and the “Gumbel–max trick” widely used in machine learning (McFadden, 1974; Yellott, 1977).</p>
-<p>The Multinomial Probit (MNP) model, by contrast, assumes Gaussian noise on latent utilities and traces its lineage to Thurstone’s theory of comparative judgment (Thurstone, 1927) and later developments in psychometrics and signal detection theory (Bock &amp; Jones, 1968). Probit models are often motivated by appeal to aggregation, pooling, or measurement noise, and they offer greater flexibility in representing correlated disturbances across alternatives. Unlike logit, however, probit does not admit a simple closed-form choice rule, nor does it enjoy an equally canonical process-level interpretation.</p>
+<p>The central question addressed in this paper is this: Can the two canonical random-utility discrete-choice specifications—multinomial logit and multinomial probit—be derived as limit cases of a single stochastic accumulation/race mechanism, so that the logit–probit relationship is explained by a unified generative process rather than by informal distributional similarity or variance matching?</p>
+<p>The Multinomial Logit (MNL) model arises when stochastic variability is modeled via independent Gumbel (Type I Extreme Value) disturbances added to deterministic utilities. This specification is tightly linked to Luce’s ratio-of-strengths axiom <span class="citation" data-cites="Luce1959">(<a href="#ref-Luce1959" role="doc-biblioref">Luce 1959</a>)</span> and admits a well-known generative interpretation: if each alternative generates stochastic events according to an independent exponential clock, the probability that an alternative is chosen first is proportional to its rate. This exponential race interpretation has played a foundational role in mathematical psychology and economics, and it underlies a broad class of models including the Plackett–Luce ranking model and the “Gumbel–max trick” widely used in machine learning <span class="citation" data-cites="McFadden1974 Yellott1977">(<a href="#ref-McFadden1974" role="doc-biblioref">McFadden 1974</a>; <a href="#ref-Yellott1977" role="doc-biblioref">Yellott 1977</a>)</span>.</p>
+<p>The Multinomial Probit (MNP) model, by contrast, assumes Gaussian noise on latent utilities and traces its lineage to Thurstone’s theory of comparative judgment <span class="citation" data-cites="Thurstone1927">(<a href="#ref-Thurstone1927" role="doc-biblioref">Thurstone 1927</a>)</span> and later developments in psychometrics and signal detection theory <span class="citation" data-cites="BockJones1968">(<a href="#ref-BockJones1968" role="doc-biblioref">Bock and Jones 1968</a>)</span>. Probit models are often motivated by appeal to aggregation, pooling, or measurement noise, and they offer greater flexibility in representing correlated disturbances across alternatives. Unlike logit, however, probit does not admit a simple closed-form choice rule, nor does it enjoy an equally canonical process-level interpretation.</p>
 <p>Although logit and probit are often treated as interchangeable in practice, their conceptual relationship remains surprisingly underdeveloped. It is well known that logistic and Gaussian cumulative distribution functions closely approximate one another under variance matching in binary choice tasks, and this observation is frequently cited to justify pragmatic model choice. Yet this numerical similarity is rarely given a deeper theoretical explanation. Instead, logit and probit are typically presented as competing assumptions about the distribution of unobserved utility noise, reflecting different historical traditions rather than different instantiations of a common mechanism.</p>
-<p>Recent work has renewed attention to this issue. Robinson et al.&nbsp;(2023) revisited the tension between Luce-based choice models and signal detection theory, applying a critical test of parameter invariance across changes in the number of alternatives (<span class="math inline">\(m\)</span>). Their empirical analysis demonstrated that Gaussian signal detection parameters (<span class="math inline">\(d'\)</span>) remained stable as the choice set size increased, whereas softmax parameters (<span class="math inline">\(\beta\)</span>) exhibited systematic variance. While this diagnostic work highlights the superior generalization of Gaussian assumptions in certain memory tasks, it leaves open the generative question: is there a single mechanism that can account for both regimes?</p>
-<p>The present work addresses this by shifting perspective. Rather than beginning with static assumptions about utility noise, we begin with a stochastic accumulation process and ask what class of random utility models it induces.</p>
+<p>Recent work has renewed attention to this issue. <span class="citation" data-cites="Robinson2023">Robinson, Clevenger, and Irwin (<a href="#ref-Robinson2023" role="doc-biblioref">2023</a>)</span> revisited the tension between Luce-based choice models and signal detection theory, applying a critical test of parameter invariance across changes in the number of alternatives (<span class="math inline">\(m\)</span>). Their empirical analysis demonstrated that Gaussian signal detection parameters (<span class="math inline">\(d'\)</span>) remained stable as the choice set size increased, whereas softmax parameters (<span class="math inline">\(\beta\)</span>) exhibited systematic variance. While this diagnostic work highlights the superior generalization of Gaussian assumptions in certain memory tasks, it leaves open the generative question: is there a single mechanism that can account for both regimes?</p>
+<p>The present work addresses this by shifting perspective. Rather than beginning with static assumptions about utility noise, this paper begins with a stochastic accumulation process and asks what class of random utility models it induces. A related line of work is the dependent Poisson race model of <span class="citation" data-cites="Ruan2008">Ruan et al. (<a href="#ref-Ruan2008" role="doc-biblioref">2008</a>)</span>, who develop a thresholded accumulation process for binary conjoint choice. Their focus, however, is on modeling dependence between alternatives via shared Poisson components, rather than on the distributional consequences of thresholded accumulation for the logit–probit relationship. The present contribution is complementary: by restricting attention to independent races and introducing a variance-preserving identification, it derives both multinomial logit and multinomial probit as endpoint regimes of a single generative family.</p>
 <section id="a-stochastic-accumulation-perspective" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="a-stochastic-accumulation-perspective"><span class="header-section-number">2.1</span> A stochastic accumulation perspective</h2>
-<p>We introduce a <strong>Poisson count race</strong>, a simple generative model in which each alternative produces stochastic events over time according to an independent Poisson process. A decision is made when one alternative reaches a fixed cumulative count threshold, denoted by <span class="math inline">\(\theta\)</span>. The threshold <span class="math inline">\(\theta\)</span> thus controls how much stochastic evidence must be accumulated before commitment.</p>
+<p>I introduce a <strong>Poisson count race</strong>, a simple generative model in which each alternative produces stochastic events over time according to an independent Poisson process. A decision is made when one alternative reaches a fixed cumulative count threshold, denoted by <span class="math inline">\(\theta\)</span>. The threshold <span class="math inline">\(\theta\)</span> thus controls how much stochastic evidence must be accumulated before commitment.</p>
 <p>Psychologically, <span class="math inline">\(\theta\)</span> can be interpreted as a commitment criterion or decision caution parameter: higher thresholds require more accumulated events before choice.</p>
 <p>This construction generalizes the classical exponential race in a minimal way. When <span class="math inline">\(\theta = 1\)</span>, the model reduces exactly to the familiar exponential race, recovering Luce’s choice rule and the Multinomial Logit model without approximation. For <span class="math inline">\(\theta &gt; 1\)</span>, choice depends not on the first event, but on the time required to accumulate multiple events, introducing a new degree of freedom into the stochastic mechanism.</p>
 <p>Crucially, the Poisson count race admits an exact Random Utility representation. The waiting time for an alternative to reach <span class="math inline">\(\theta\)</span> events follows a Gamma (Erlang) distribution, and comparing these waiting times is equivalent to comparing latent utilities composed of a deterministic component and a stochastic component with a log-Gamma distribution. Varying the threshold <span class="math inline">\(\theta\)</span> therefore induces a one-parameter family of random utility models with a shared systematic utility but systematically varying noise distributions.</p>
@@ -196,7 +226,7 @@ window.Quarto = {
 <section id="noise-scale-noise-shape-and-identification" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="noise-scale-noise-shape-and-identification"><span class="header-section-number">2.2</span> Noise scale, noise shape, and identification</h2>
 <p>A central difficulty in comparing discrete choice models with different error distributions is the identification of scale. In standard practice, the scale of utility noise is absorbed into the coefficients, making it difficult to compare models with different distributional assumptions on equal footing. This issue is particularly salient when contrasting logit and probit models, whose error distributions differ not only in shape but also in variance and tail behavior.</p>
-<p>To address this, we introduce a <strong>temperature identification</strong> that standardizes the stochastic component of utility to have fixed variance across all values of <span class="math inline">\(\theta\)</span>. This separates two conceptually distinct aspects of randomness in choice:</p>
+<p>To address this, I introduce a <strong>temperature identification</strong> that standardizes the stochastic component of utility to have fixed variance across all values of <span class="math inline">\(\theta\)</span>. This separates two conceptually distinct aspects of randomness in choice:</p>
 <ol type="1">
 <li><p><strong>Noise scale</strong>, controlled by a temperature parameter <span class="math inline">\(\beta\)</span>, which governs the overall magnitude of stochasticity relative to systematic utility.</p></li>
 <li><p><strong>Noise shape</strong>, controlled by the accumulation threshold <span class="math inline">\(\theta\)</span>, which determines the distributional form of the stochastic component.</p></li>
@@ -205,18 +235,8 @@ window.Quarto = {
 </section>
 <section id="logit-and-probit-as-endpoint-regimes" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="logit-and-probit-as-endpoint-regimes"><span class="header-section-number">2.3</span> Logit and probit as endpoint regimes</h2>
-<p>Within the temperature-identified Poisson count race, two classical models emerge as limiting cases of a single generative mechanism. When <span class="math inline">\(\theta = 1\)</span>, the stochastic utility component is exactly Gumbel distributed, yielding the <strong>Multinomial Logit</strong> model without approximation. As <span class="math inline">\(\theta \to \infty\)</span>, the standardized log-Gamma noise converges in distribution to a Gaussian by the Central Limit Theorem, and the resulting choice probabilities converge to those of the <strong>Multinomial Probit</strong> model.</p>
-<p>From this perspective, the familiar distinction between logit and probit reflects differences in the stopping rule governing an evidence accumulation process, rather than fundamentally distinct assumptions about decision noise. Extreme-value behavior and Gaussian behavior arise naturally as endpoint regimes of the same stochastic system.</p>
-</section>
-<section id="contribution-and-overview" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="contribution-and-overview"><span class="header-section-number">2.4</span> Contribution and overview</h2>
-<p>The contribution of this paper is not to introduce a new discrete choice specification, but to provide a unifying generative framework that clarifies the relationship between two foundational models. Specifically, we show that:</p>
-<ol type="1">
-<li><p>Multinomial Logit arises exactly as the single-event threshold case of a Poisson race.</p></li>
-<li><p>Multinomial Probit emerges as a non-degenerate asymptotic limit under temperature identification.</p></li>
-<li><p>Intermediate accumulation thresholds correspond to log-Gamma random utility models with a clear process interpretation.</p></li>
-</ol>
-<p>The remainder of the paper formalizes this framework. Section 2 gives the formal definition of generalized random utility models. Section 3 introduces the Poisson count race and derives its exact random utility representation. Section 4 establishes the logit boundary at <span class="math inline">\(\theta = 1\)</span>. Section 5 introduces temperature identification and analyzes the probit limit as <span class="math inline">\(\theta \to \infty\)</span>. Section 6 presents simulations illustrating the interpolation between regimes, and Section 7 discusses implications for discrete choice modeling and evidence accumulation theories.</p>
+<p>Within the temperature-identified Poisson count race, two classical models emerge as limiting cases of a single generative mechanism. When <span class="math inline">\(\theta = 1\)</span>, the stochastic utility component is exactly Gumbel distributed, yielding the <strong>Multinomial Logit</strong> model without approximation. As <span class="math inline">\(\theta \to \infty\)</span>, the standardized log-Gamma noise converges in distribution to a Gaussian by the Central Limit Theorem, and the resulting choice probabilities converge to those of the <strong>Multinomial Probit</strong> model. From this perspective, the familiar distinction between logit and probit reflects differences in the stopping rule governing an evidence accumulation process, rather than fundamentally distinct assumptions about decision noise.</p>
+<p>Specifically, the paper establishes three results: (1) Multinomial Logit arises exactly as the single-event threshold case of a Poisson race; (2) Multinomial Probit emerges as a non-degenerate asymptotic limit under temperature identification; and (3) intermediate accumulation thresholds correspond to log-Gamma random utility models with a clear process interpretation. The remainder of the paper formalizes this framework, presents simulations illustrating the interpolation between regimes, and discusses implications for discrete choice modeling.</p>
 </section>
 </section>
 <section id="formal-statement-of-random-utility-models" class="level1" data-number="3">
@@ -235,7 +255,7 @@ window.Quarto = {
 <section id="the-generative-model-a-poisson-count-race" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> The Generative Model: A Poisson Count Race</h1>
 <p>Let the accumulation of evidence or preference for each alternative <span class="math inline">\(i\)</span> be modeled by independent Poisson processes, denoted <span class="math inline">\(N_i(t)\)</span>, with rate parameters <span class="math inline">\(\lambda_i &gt; 0\)</span>.</p>
-<p>We define a <strong>Count Race</strong> characterized by an integer threshold <span class="math inline">\(\theta \ge 1\)</span>. The process terminates when any single process accumulates <span class="math inline">\(\theta\)</span> events.</p>
+<p>Then, define a <strong>Count Race</strong> characterized by an integer threshold <span class="math inline">\(\theta \ge 1\)</span>. The process terminates when any single process accumulates <span class="math inline">\(\theta\)</span> events.</p>
 <p><strong>Definition 1 (Stopping Time).</strong> The stopping time for the system is defined as:</p>
 <p><span class="math display">\[\tau_{\theta} = \inf \{t \ge 0 : \max_{i} N_i(t) = \theta \}\]</span></p>
 <p><strong>Definition 2 (Choice).</strong> The chosen alternative is the specific process that triggers the stopping time:</p>
@@ -251,9 +271,9 @@ window.Quarto = {
 </section>
 <section id="the-random-utility-representation" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="the-random-utility-representation"><span class="header-section-number">4.2</span> The Random Utility Representation</h2>
-<p>The Gamma random variables may be standardized. Let <span class="math inline">\(G_i \sim \text{Gamma}(\theta, 1)\)</span> be i.i.d. random variables. Utilizing the scaling property of the Gamma distribution, the waiting times can be expressed as:</p>
+<p>Because the Poisson processes <span class="math inline">\(N_1(t), \ldots, N_K(t)\)</span> are mutually independent, the waiting times <span class="math inline">\(T_1^{(\theta)}, \ldots, T_K^{(\theta)}\)</span> are also mutually independent. By the scaling property of the Gamma distribution, each waiting time can be written as</p>
 <p><span class="math display">\[T_i^{(\theta)} \stackrel{d}{=} \frac{G_i}{\lambda_i}\]</span></p>
-<p>Consequently, the choice problem is formulated as:</p>
+<p>where <span class="math inline">\(G_1, \ldots, G_K \stackrel{\text{i.i.d.}}{\sim} \text{Gamma}(\theta, 1)\)</span> are mutually independent standard Gamma random variables. Consequently, the choice problem is formulated as:</p>
 <p><span class="math display">\[C = \arg \min_{i} \left( \frac{G_i}{\lambda_i} \right)\]</span></p>
 <p>Applying the natural logarithm, a monotonic transformation, reverses the optimization direction from minimization to maximization:</p>
 <p><span class="math display">\[\begin{aligned} C &amp;= \arg \min_{i} (\log G_i - \log \lambda_i) \\ &amp;= \arg \max_{i} (\log \lambda_i - \log G_i) \end{aligned}\]</span></p>
@@ -284,9 +304,9 @@ window.Quarto = {
 <p><span class="math display">\[\begin{aligned} \mathbb{E}[\epsilon^{(\theta)}] &amp;= -\psi(\theta) \\ \text{Var}(\epsilon^{(\theta)}) &amp;= \psi_1(\theta) \end{aligned}\]</span></p>
 <p>where <span class="math inline">\(\psi(\cdot)\)</span> denotes the digamma function and <span class="math inline">\(\psi_1(\cdot)\)</span> the trigamma function.</p>
 <p>As <span class="math inline">\(\theta \to \infty\)</span>, <span class="math inline">\(\psi_1(\theta) \approx 1/\theta \to 0\)</span>. In the absence of standardization, the model becomes deterministic as the stochastic noise vanishes. To facilitate comparison of error “shapes” across varying <span class="math inline">\(\theta\)</span> values, a consistent scale must be enforced. This process is referred to as <strong>Temperature Identification</strong>. Unlike conventional scale normalization, this identification preserves non-degenerate choice behavior as <span class="math inline">\(\theta\)</span> increases, allowing the large-<span class="math inline">\(\theta\)</span> limit to be meaningfully interpreted.</p>
-<p>We define the standardized noise term <span class="math inline">\(Z_i^{(\theta)}\)</span> such that it possesses zero mean and unit variance for all <span class="math inline">\(\theta\)</span>:</p>
+<p>We can define the standardized noise term <span class="math inline">\(Z_i^{(\theta)}\)</span> such that it possesses zero mean and unit variance for all <span class="math inline">\(\theta\)</span>:</p>
 <p><span class="math display">\[Z_i^{(\theta)} := \frac{\epsilon_i^{(\theta)} - \mu_\theta}{\sigma_\theta} = \frac{-\log G_i + \psi(\theta)}{\sqrt{\psi_1(\theta)}}\]</span></p>
-<p>We propose the <strong>Temperature-Identified Family</strong> of utility models:</p>
+<p>This leads to a <strong>Temperature-Identified Family</strong> of utility models:</p>
 <p><span class="math display">\[U_i^{(\theta)} = v_i + \beta Z_i^{(\theta)}\]</span></p>
 <p>Here:</p>
 <ul>
@@ -297,9 +317,10 @@ window.Quarto = {
 </section>
 <section id="the-probit-limit-theta-to-infty" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> The Probit Limit (<span class="math inline">\(\theta \to \infty\)</span>)</h1>
-<p>This section investigates the asymptotic behavior of the temperature-identified model as the count threshold increases. We rely on the asymptotic normality of the log-transformed Gamma distribution.</p>
-<p>Intuitively, as the count threshold increases, the log-Gamma noise reflects the aggregation of many small stochastic increments, and Gaussian behavior emerges by the Central Limit Theorem.</p>
-<p>As <span class="math inline">\(\theta \to \infty\)</span>:</p>
+<p>This section establishes the asymptotic behavior of the temperature-identified model as the count threshold increases.</p>
+<p>The key observation is that <span class="math inline">\(G_i \sim \text{Gamma}(\theta, 1)\)</span> can be decomposed as a sum of <span class="math inline">\(\theta\)</span> independent exponential random variables: <span class="math inline">\(G_i = \sum_{j=1}^{\theta} E_{ij}\)</span>, where <span class="math inline">\(E_{ij} \stackrel{\text{i.i.d.}}{\sim} \text{Exp}(1)\)</span>. By the law of large numbers, <span class="math inline">\(G_i / \theta \xrightarrow{p} 1\)</span> as <span class="math inline">\(\theta \to \infty\)</span>. Applying the delta method with the function <span class="math inline">\(g(x) = -\log(x)\)</span>, we obtain</p>
+<p><span class="math display">\[\sqrt{\theta}\,(-\log G_i - (-\log \theta)) \xrightarrow{d} \mathcal{N}\bigl(0,\, [g'(1)]^2\bigr) = \mathcal{N}(0, 1).\]</span></p>
+<p>Since the standardization <span class="math inline">\(Z_i^{(\theta)} = (-\log G_i + \psi(\theta)) / \sqrt{\psi_1(\theta)}\)</span> uses <span class="math inline">\(\psi(\theta) \sim \log\theta - 1/(2\theta)\)</span> and <span class="math inline">\(\psi_1(\theta) \sim 1/\theta\)</span>, this is asymptotically equivalent. Therefore, as <span class="math inline">\(\theta \to \infty\)</span>:</p>
 <p><span class="math display">\[Z_i^{(\theta)} \xrightarrow{d} \mathcal{N}(0, 1)\]</span></p>
 <p>Consequently, the random utilities converge in distribution:</p>
 <p><span class="math display">\[(v_i + \beta Z_i^{(\theta)})_{i=1}^K \xrightarrow{d} (v_i + \beta Z_i)_{i=1}^K\]</span></p>
@@ -307,24 +328,15 @@ window.Quarto = {
 <p>Given that the error terms converge to additive Gaussian noise, the choice probabilities converge to those of the Multinomial Probit model.</p>
 <p><strong>Result 2:</strong> As <span class="math inline">\(\theta \to \infty\)</span>, the Temperature-Identified Poisson race converges to a Probit model with noise scale <span class="math inline">\(\beta\)</span>.</p>
 </section>
-<section id="summary" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Summary</h1>
-<p>The derivation presented herein establishes the Poisson Count Race as a flexible generative mechanism for discrete choice. By identifying the model via temperature standardization, we obtain a single-parameter family (indexed by <span class="math inline">\(\theta\)</span>) that continuously bridges the two classical extremes of choice modeling:</p>
-<ol type="1">
-<li><p><span class="math inline">\(\theta = 1\)</span><strong>:</strong> Exact <strong>Logit</strong> (Gumbel errors).</p></li>
-<li><p><span class="math inline">\(1 &lt; \theta &lt; \infty\)</span><strong>:</strong> <strong>Log-Gamma</strong> RUM (an intermediate regime).</p></li>
-<li><p><span class="math inline">\(\theta \to \infty\)</span><strong>:</strong> <strong>Probit</strong> (Gaussian errors).</p></li>
-</ol>
-<p>This result suggests that the distinction between Logit and Probit may be viewed not as a fundamental difference in error philosophy, but rather as a difference in the stopping rule governing an underlying stochastic accumulation process.</p>
-</section>
-<section id="simulation-studies-binary-choice" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Simulation Studies: Binary Choice</h1>
-<p>To illustrate how the Poisson count race family interpolates between Logit and Probit, we conduct a simulation study in the binary choice setting (<span class="math inline">\(K=2\)</span>). This setting admits closed-form choice probabilities and allows direct visual comparison with both classical models.</p>
+<section id="simulation-studies-binary-choice" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Simulation Studies: Binary Choice</h1>
+<p>To illustrate how the Poisson count race family interpolates between Logit and Probit, I conducted a simulation study in the binary choice setting (<span class="math inline">\(K=2\)</span>). This setting admits closed-form choice probabilities and allows direct visual comparison with both classical models.</p>
 <p>Let <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span> denote the Poisson rates of the two alternatives, and define the log-rate ratio <span class="math inline">\(x = \log(\lambda_1/\lambda_2)\)</span>. The probability that alternative 1 wins the race can be expressed in closed form using the regularized incomplete Beta function:</p>
 <p><span class="math display">\[\Pr(C = 1 \mid x, \theta) = I_{\sigma(x)}(\theta, \theta)\]</span></p>
-<p>where <span class="math inline">\(I_p(a, b)\)</span> is the regularized incomplete Beta function and <span class="math inline">\(\sigma(x) = (1 + e^{-x})^{-1}\)</span>. For <span class="math inline">\(\theta = 1\)</span>, this reduces exactly to <span class="math inline">\(\sigma(x)\)</span>, the logistic function.</p>
+<p>where <span class="math inline">\(I_p(a, b)\)</span> is the regularized incomplete Beta function and <span class="math inline">\(\sigma(x) = (1 + e^{-x})^{-1}\)</span>. To see this, note that alternative 1 wins the race if and only if <span class="math inline">\(T_1^{(\theta)} &lt; T_2^{(\theta)}\)</span>, where <span class="math inline">\(T_i^{(\theta)} \sim \text{Gamma}(\theta, \lambda_i)\)</span>. Equivalently, defining <span class="math inline">\(W = T_1^{(\theta)} / (T_1^{(\theta)} + T_2^{(\theta)})\)</span>, we have <span class="math inline">\(W \sim \text{Beta}(\theta, \theta)\)</span> when evaluated at <span class="math inline">\(p = \lambda_1 / (\lambda_1 + \lambda_2) = \sigma(x)\)</span>, giving <span class="math inline">\(\Pr(T_1 &lt; T_2) = I_{\sigma(x)}(\theta, \theta)\)</span>. For <span class="math inline">\(\theta = 1\)</span>, this reduces exactly to <span class="math inline">\(\sigma(x)\)</span>, the logistic function.</p>
 <p>When choice probabilities are plotted directly as a function of <span class="math inline">\(x\)</span> for increasing <span class="math inline">\(\theta\)</span>, the choice function becomes increasingly steep and converges to a step function at <span class="math inline">\(x = 0\)</span>, reflecting deterministic selection of the alternative with the larger rate. This confirms that without temperature identification, increasing the count threshold simply reduces stochasticity rather than inducing Gaussian behavior.</p>
-<p>To compare noise <em>shape</em> independently of noise <em>scale</em>, we adopt the temperature identification introduced in Section 5. For binary choice, the variance of the utility noise difference is <span class="math inline">\(\text{Var}(\epsilon_1^{(\theta)} - \epsilon_2^{(\theta)}) = 2\psi_1(\theta)\)</span>. We therefore define the standardized signal <span class="math inline">\(s = x / \sqrt{2\psi_1(\theta)}\)</span>. On this variance-matched axis, the Logit reference (<span class="math inline">\(\theta = 1\)</span>) uses <span class="math inline">\(\text{sd}_{\text{diff}} = \pi/\sqrt{3}\)</span> (the standard deviation of the difference of two independent Gumbel variates), and the Probit reference is simply <span class="math inline">\(\Phi(s)\)</span>. Under this normalization, the <span class="math inline">\(\theta = 1\)</span> Poisson race coincides exactly with the variance-matched logit curve, while increasing <span class="math inline">\(\theta\)</span> yields choice functions that converge uniformly to the probit curve.</p>
+<p>To compare noise <em>shape</em> independently of noise <em>scale</em>, I adopted the temperature identification introduced in Section 5. For binary choice, the variance of the utility noise difference is <span class="math inline">\(\text{Var}(\epsilon_1^{(\theta)} - \epsilon_2^{(\theta)}) = 2\psi_1(\theta)\)</span>. I therefore define the standardized signal <span class="math inline">\(s = x / \sqrt{2\psi_1(\theta)}\)</span>. On this variance-matched axis, the Logit reference (<span class="math inline">\(\theta = 1\)</span>) uses <span class="math inline">\(\text{sd}_{\text{diff}} = \pi/\sqrt{3}\)</span> (the standard deviation of the difference of two independent Gumbel variates), and the Probit reference is simply <span class="math inline">\(\Phi(s)\)</span>.</p>
+<p>For the multinomial simulations, the same principle applies. The logit reference uses an effective inverse temperature of <span class="math inline">\(\pi / (\beta\sqrt{6})\)</span>, which ensures the Gumbel noise has standard deviation matching <span class="math inline">\(\beta\)</span> under the unit-variance convention. The probit reference uses noise scale <span class="math inline">\(\beta\)</span> directly. All simulations use <span class="math inline">\(\beta = 1\)</span> unless otherwise noted. Under this normalization, the <span class="math inline">\(\theta = 1\)</span> Poisson race coincides exactly with the variance-matched logit curve, while increasing <span class="math inline">\(\theta\)</span> yields choice functions that converge uniformly to the probit curve.</p>
 <p>Because logit and probit are themselves numerically close under variance matching, the differences between models are small in absolute magnitude but systematic. To make these differences visible, <a href="#fig-residuals" class="quarto-xref">Figure&nbsp;1</a> plots residuals relative to the variance-matched Logit model. At <span class="math inline">\(\theta = 1\)</span>, the residual is identically zero (exact Logit). As <span class="math inline">\(\theta\)</span> increases, the residuals grow smoothly and converge toward the Probit<span class="math inline">\(-\)</span>Logit difference curve, with the maximum absolute deviation from probit decaying rapidly in <span class="math inline">\(\theta\)</span>. This confirms that the temperature-identified Poisson count race defines a continuous, parameterized family of choice rules that interpolates smoothly between logit-like and probit-like behavior.</p>
 <div id="cell-fig-residuals" class="cell">
 <div class="cell-output-display">
@@ -341,11 +353,11 @@ Figure&nbsp;1: Residuals of Poisson count race choice probabilities relative to 
 </div>
 <a class="quarto-notebook-link" id="nblink-1" href="index-preview.html#cell-fig-residuals">Source: Article Notebook</a></div>
 </section>
-<section id="simulation-studies-multinomial-k-alternative-choice" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> Simulation Studies: Multinomial K-alternative Choice</h1>
-<p>The binary simulation demonstrates that the temperature-identified Poisson count race interpolates smoothly between Logit (<span class="math inline">\(\theta = 1\)</span>) and Probit (<span class="math inline">\(\theta \to \infty\)</span>) in the two-alternative case. Here we extend this analysis to the multinomial setting (<span class="math inline">\(K &gt; 2\)</span>), where the differences between logit and probit become richer and more consequential.</p>
+<section id="simulation-studies-multinomial-k-alternative-choice" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Simulation Studies: Multinomial K-alternative Choice</h1>
+<p>The binary simulation demonstrates that the temperature-identified Poisson count race interpolates smoothly between Logit (<span class="math inline">\(\theta = 1\)</span>) and Probit (<span class="math inline">\(\theta \to \infty\)</span>) in the two-alternative case. Here I extend this analysis to the multinomial setting (<span class="math inline">\(K &gt; 2\)</span>), where the differences between logit and probit become richer and more consequential.</p>
 <p>In the binary case, logit and probit choice functions differ only in the shape of the psychometric curve—a subtle quantitative distinction. With three or more alternatives, additional qualitative differences emerge. Most prominently, the Multinomial Logit model satisfies the <em>Independence of Irrelevant Alternatives</em> (IIA) property: the ratio of choice probabilities for any two alternatives is independent of the remaining alternatives in the choice set. The Multinomial Probit model, even with independent errors, does not share this property. The Poisson count race therefore provides a window into how IIA-like behavior gradually weakens as the noise distribution transitions from Gumbel to Gaussian.</p>
-<p>We organise the multinomial simulations around five questions:</p>
+<p>The multinomial simulations are organised around five questions:</p>
 <ol type="1">
 <li><strong>Convergence</strong>: How quickly do Poisson count race choice probabilities converge to the Probit reference as <span class="math inline">\(\theta\)</span> increases, and does the rate of convergence depend on <span class="math inline">\(K\)</span>?</li>
 <li><strong>Probability vectors</strong>: How does the full distribution over alternatives change as <span class="math inline">\(\theta\)</span> varies from 1 to large values?</li>
@@ -353,48 +365,48 @@ Figure&nbsp;1: Residuals of Poisson count race choice probabilities relative to 
 <li><strong>Independence of Irrelevant Alternatives</strong>: How does the IIA property—exact under logit—erode as <span class="math inline">\(\theta\)</span> increases toward the probit regime?</li>
 <li><strong>Parameter invariance</strong>: When misspecified logit or probit models are fit to Poisson count race data, which model yields parameters that are invariant to <span class="math inline">\(K\)</span>?</li>
 </ol>
-<p>All simulations use Monte Carlo sampling with <span class="math inline">\(10^6\)</span> replications per condition unless otherwise noted.</p>
-<section id="study-1-convergence-to-probit" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="study-1-convergence-to-probit"><span class="header-section-number">10.1</span> Study 1: Convergence to Probit</h2>
-<p>We first examine how the total variation (TV) distance between the Poisson count race choice probabilities and the Logit / Probit references changes as a function of <span class="math inline">\(\theta\)</span>, for different numbers of alternatives <span class="math inline">\(K\)</span>.</p>
-<p>For each <span class="math inline">\(K\)</span>, we use linearly spaced utilities <span class="math inline">\(v_i = (K - i)/(K - 1)\)</span> for <span class="math inline">\(i = 1, \ldots, K\)</span>, ensuring that the best and worst alternatives always have utilities 1 and 0 regardless of <span class="math inline">\(K\)</span>. The temperature is fixed at <span class="math inline">\(\beta = 1\)</span>.</p>
+<p>All simulations use Monte Carlo sampling with <span class="math inline">\(10^6\)</span> to <span class="math inline">\(10^7\)</span> replications per condition unless otherwise noted.</p>
+<section id="study-1-convergence-to-probit" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="study-1-convergence-to-probit"><span class="header-section-number">9.1</span> Study 1: Convergence to Probit</h2>
+<p>I first examine how the total variation (TV) distance between the Poisson count race choice probabilities and the Logit / Probit references changes as a function of <span class="math inline">\(\theta\)</span>, for different numbers of alternatives <span class="math inline">\(K\)</span>.</p>
+<p>For each <span class="math inline">\(K\)</span>, I use linearly spaced utilities <span class="math inline">\(v_i = (K - i)/(K - 1)\)</span> for <span class="math inline">\(i = 1, \ldots, K\)</span>, ensuring that the best and worst alternatives always have utilities 1 and 0 regardless of <span class="math inline">\(K\)</span>. The temperature is fixed at <span class="math inline">\(\beta = 1\)</span>.</p>
 <div id="cell-fig-tv-distance" class="cell">
 <div class="cell-output-display">
 <div id="fig-tv-distance" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tv-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-tv-distance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Total variation distance between Poisson count race choice probabilities and the Logit (blue) and Probit (red) references, as a function of threshold θ. Each panel corresponds to a different number of alternatives K. As θ increases, the race model moves away from logit and toward probit across all values of K. The convergence to probit is rapid: by θ ≈ 50–100, the TV distance from probit is negligible."><img src="index_files/figure-html/fig-tv-distance-1.png" class="img-fluid figure-img" width="960"></a>
+<a href="index_files/figure-html/fig-tv-distance-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Total variation distance between Poisson count race choice probabilities and the Logit (blue) and Probit (red) references, as a function of threshold θ, for different numbers of alternatives K."><img src="index_files/figure-html/fig-tv-distance-1.png" class="img-fluid figure-img" width="960"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tv-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Total variation distance between Poisson count race choice probabilities and the Logit (blue) and Probit (red) references, as a function of threshold θ. Each panel corresponds to a different number of alternatives K. As θ increases, the race model moves away from logit and toward probit across all values of K. The convergence to probit is rapid: by θ ≈ 50–100, the TV distance from probit is negligible.
+Figure&nbsp;2: Total variation distance between Poisson count race choice probabilities and the Logit (blue) and Probit (red) references, as a function of threshold θ, for different numbers of alternatives K.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="study-2-choice-probability-vectors" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="study-2-choice-probability-vectors"><span class="header-section-number">10.2</span> Study 2: Choice Probability Vectors</h2>
-<p>To visualise how the full distribution over alternatives evolves with <span class="math inline">\(\theta\)</span>, we fix <span class="math inline">\(K = 5\)</span> with utilities <span class="math inline">\(v = (2.0,\; 1.5,\; 1.0,\; 0.5,\; 0.0)\)</span> and plot the choice probability for each alternative across a range of thresholds.</p>
+<section id="study-2-choice-probability-vectors" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="study-2-choice-probability-vectors"><span class="header-section-number">9.2</span> Study 2: Choice Probability Vectors</h2>
+<p>To visualise how the full distribution over alternatives evolves with <span class="math inline">\(\theta\)</span>, I fix <span class="math inline">\(K = 5\)</span> with utilities <span class="math inline">\(v = (2.0,\; 1.5,\; 1.0,\; 0.5,\; 0.0)\)</span> and plot the choice probability for each alternative across a range of thresholds.</p>
 <div id="cell-fig-prob-vectors" class="cell">
 <div class="cell-output-display">
 <div id="fig-prob-vectors" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-prob-vectors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-prob-vectors-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Choice probabilities for each of five alternatives as a function of threshold θ, under the temperature-identified Poisson count race with β = 1. Horizontal dashed lines mark the Logit reference (θ = 1); horizontal dotted lines mark the Probit reference (θ → ∞). As θ increases, the race probabilities transition smoothly from logit to probit values. The probit model concentrates slightly more probability on the best alternative and less on the worst, relative to logit, reflecting the thinner tails of the Gaussian distribution."><img src="index_files/figure-html/fig-prob-vectors-1.png" class="img-fluid figure-img" width="768"></a>
+<a href="index_files/figure-html/fig-prob-vectors-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Choice probabilities for each of five alternatives as a function of threshold θ. Dashed lines: Logit reference; dotted lines: Probit reference."><img src="index_files/figure-html/fig-prob-vectors-1.png" class="img-fluid figure-img" width="768"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prob-vectors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Choice probabilities for each of five alternatives as a function of threshold θ, under the temperature-identified Poisson count race with β = 1. Horizontal dashed lines mark the Logit reference (θ = 1); horizontal dotted lines mark the Probit reference (θ → ∞). As θ increases, the race probabilities transition smoothly from logit to probit values. The probit model concentrates slightly more probability on the best alternative and less on the worst, relative to logit, reflecting the thinner tails of the Gaussian distribution.
+Figure&nbsp;3: Choice probabilities for each of five alternatives as a function of threshold θ. Dashed lines: Logit reference; dotted lines: Probit reference.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="study-3-set-size-scaling" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="study-3-set-size-scaling"><span class="header-section-number">10.3</span> Study 3: Set-Size Scaling</h2>
-<p>A critical diagnostic for discriminating between logit and probit models is the effect of adding alternatives to the choice set (Robinson et al., 2023). Under MNL, the probability of choosing a target alternative with fixed utility is strictly determined by the ratio of its strength to the total strength. Under MNP, the scaling with set size differs because the probability of “winning” the maximum comparison depends on the shape of the noise distribution.</p>
-<p>We fix a target alternative with utility <span class="math inline">\(v_\text{target} = 1\)</span> and add <span class="math inline">\(K - 1\)</span> equal competitors, each with utility <span class="math inline">\(v_\text{comp} = 0\)</span>. As <span class="math inline">\(K\)</span> grows, we track the probability of choosing the target.</p>
+<section id="study-3-set-size-scaling" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="study-3-set-size-scaling"><span class="header-section-number">9.3</span> Study 3: Set-Size Scaling</h2>
+<p>A critical diagnostic for discriminating between logit and probit models is the effect of adding alternatives to the choice set <span class="citation" data-cites="Robinson2023">(<a href="#ref-Robinson2023" role="doc-biblioref">Robinson, Clevenger, and Irwin 2023</a>)</span>. Under MNL, the probability of choosing a target alternative with fixed utility is strictly determined by the ratio of its strength to the total strength. Under MNP, the scaling with set size differs because the probability of “winning” the maximum comparison depends on the shape of the noise distribution.</p>
+<p>I fix a target alternative with utility <span class="math inline">\(v_\text{target} = 1\)</span> and add <span class="math inline">\(K - 1\)</span> equal competitors, each with utility <span class="math inline">\(v_\text{comp} = 0\)</span>. As <span class="math inline">\(K\)</span> grows, I track the probability of choosing the target.</p>
 <p>Under MNL, the choice probability is <span class="math inline">\(P(\text{target}) = e^a / (e^a + K - 1)\)</span>, where <span class="math inline">\(a = v_t \cdot \pi / (\beta \sqrt{6})\)</span> is the effective scaled utility.</p>
 <p>Under MNP: <span class="math inline">\(P(\text{target}) = \int \phi(z) \,\Phi(v_t/\beta + z)^{K-1}\, dz\)</span> (by symmetry of the <span class="math inline">\(K - 1\)</span> equal competitors). This integral reveals that probit’s thinner tails give the target a larger advantage over many competitors than logit’s heavier tails.</p>
 <div id="cell-fig-set-size" class="cell">
@@ -402,73 +414,73 @@ Figure&nbsp;3: Choice probabilities for each of five alternatives as a function 
 <div id="fig-set-size" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-set-size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-set-size-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Probability of choosing a target alternative (v = 1) against K − 1 equal competitors (v = 0) as a function of set size K, for selected values of θ. MNL (dashed blue) and MNP (dashed red) references are shown. As θ increases, the race model transitions from logit-like to probit-like set-size scaling. The probit model assigns systematically higher probability to the target than logit when K is large, reflecting the thinner tails of Gaussian noise."><img src="index_files/figure-html/fig-set-size-1.png" class="img-fluid figure-img" width="768"></a>
+<a href="index_files/figure-html/fig-set-size-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Probability of choosing a target alternative (v = 1) against K − 1 equal competitors (v = 0) as a function of set size K. MNL (dashed blue) and MNP (dashed red) references are shown."><img src="index_files/figure-html/fig-set-size-1.png" class="img-fluid figure-img" width="768"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-set-size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Probability of choosing a target alternative (v = 1) against K − 1 equal competitors (v = 0) as a function of set size K, for selected values of θ. MNL (dashed blue) and MNP (dashed red) references are shown. As θ increases, the race model transitions from logit-like to probit-like set-size scaling. The probit model assigns systematically higher probability to the target than logit when K is large, reflecting the thinner tails of Gaussian noise.
+Figure&nbsp;4: Probability of choosing a target alternative (v = 1) against K − 1 equal competitors (v = 0) as a function of set size K. MNL (dashed blue) and MNP (dashed red) references are shown.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="study-4-independence-of-irrelevant-alternatives" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="study-4-independence-of-irrelevant-alternatives"><span class="header-section-number">10.4</span> Study 4: Independence of Irrelevant Alternatives</h2>
+<section id="study-4-independence-of-irrelevant-alternatives" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="study-4-independence-of-irrelevant-alternatives"><span class="header-section-number">9.4</span> Study 4: Independence of Irrelevant Alternatives</h2>
 <p>The IIA property is a hallmark of the Multinomial Logit model: the ratio of choice probabilities for any two alternatives is invariant to the composition of the choice set. Formally, for alternatives <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>:</p>
 <p><span class="math display">\[\frac{P(i \mid \mathcal{C})}{P(j \mid \mathcal{C})} = \frac{e^{v_i}}{e^{v_j}} \quad \text{for all choice sets } \mathcal{C} \ni i, j\]</span></p>
 <p>This property does not hold for the Multinomial Probit model, even when errors are independent and identically distributed. The Poisson count race therefore provides a mechanism through which IIA holds exactly at <span class="math inline">\(\theta = 1\)</span> and is progressively violated as <span class="math inline">\(\theta\)</span> increases.</p>
-<p>To quantify this, we consider three alternatives with utilities <span class="math inline">\(v = (2, 1, 0)\)</span>. We compute the ratio <span class="math inline">\(P(1)/P(2)\)</span> under two conditions:</p>
+<p>To quantify this, I consider three alternatives with utilities <span class="math inline">\(v = (2, 1, 0)\)</span>. I compute the ratio <span class="math inline">\(P(1)/P(2)\)</span> under two conditions:</p>
 <ul>
 <li><strong>Full set</strong>: all three alternatives present <span class="math inline">\(\{1, 2, 3\}\)</span></li>
 <li><strong>Reduced set</strong>: only alternatives <span class="math inline">\(\{1, 2\}\)</span> present</li>
 </ul>
-<p>Under IIA, these ratios should be identical. We track the percentage change in the ratio as <span class="math inline">\(\theta\)</span> varies.</p>
+<p>Under IIA, these ratios should be identical. I track the percentage change in the ratio as <span class="math inline">\(\theta\)</span> varies.</p>
 <div id="cell-fig-iia" class="cell">
 <div class="cell-output-display">
 <div id="fig-iia" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-iia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-iia-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Test of Independence of Irrelevant Alternatives (IIA). Left: the ratio P(Alt 1)/P(Alt 2) computed in the full set {1, 2, 3} (solid) and the reduced set {1, 2} (dashed), as a function of θ. Under IIA (θ = 1), the two ratios are equal. As θ increases, they diverge. Right: percentage change in the ratio when alternative 3 is removed, quantifying the IIA violation. The violation increases with θ, confirming that IIA is a property of the Gumbel noise shape that erodes as the noise distribution shifts toward Gaussian."><img src="index_files/figure-html/fig-iia-1.png" class="img-fluid figure-img" width="960"></a>
+<a href="index_files/figure-html/fig-iia-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Test of IIA. Left: the ratio P(Alt 1)/P(Alt 2) in the full set {1, 2, 3} (solid) and reduced set {1, 2} (dashed). Right: percentage change in the ratio when alternative 3 is removed."><img src="index_files/figure-html/fig-iia-1.png" class="img-fluid figure-img" width="960"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-iia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Test of Independence of Irrelevant Alternatives (IIA). Left: the ratio P(Alt 1)/P(Alt 2) computed in the full set {1, 2, 3} (solid) and the reduced set {1, 2} (dashed), as a function of θ. Under IIA (θ = 1), the two ratios are equal. As θ increases, they diverge. Right: percentage change in the ratio when alternative 3 is removed, quantifying the IIA violation. The violation increases with θ, confirming that IIA is a property of the Gumbel noise shape that erodes as the noise distribution shifts toward Gaussian.
+Figure&nbsp;5: Test of IIA. Left: the ratio P(Alt 1)/P(Alt 2) in the full set {1, 2, 3} (solid) and reduced set {1, 2} (dashed). Right: percentage change in the ratio when alternative 3 is removed.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="study-5-parameter-invariance-across-set-size" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="study-5-parameter-invariance-across-set-size"><span class="header-section-number">10.5</span> Study 5: Parameter Invariance Across Set Size</h2>
-<p>A key empirical diagnostic for distinguishing between logit and probit is parameter invariance across changes in set size <span class="math inline">\(K\)</span> (Robinson et al., 2023). If choice data are generated by a logit model, the softmax inverse temperature <span class="math inline">\(\beta_{\text{logit}}\)</span> recovered from fitting a logit specification should remain constant as <span class="math inline">\(K\)</span> increases. Conversely, if the data follow a probit model, the Gaussian noise scale <span class="math inline">\(\beta_{\text{probit}}\)</span> should be invariant to <span class="math inline">\(K\)</span>.</p>
-<p>We test this directly. For each value of <span class="math inline">\(\theta\)</span> and each set size <span class="math inline">\(K\)</span> (with a target at <span class="math inline">\(v = 1\)</span> vs.&nbsp;<span class="math inline">\(K-1\)</span> equal competitors at <span class="math inline">\(v = 0\)</span>), we compute the “true” choice probability <span class="math inline">\(P(\text{target})\)</span> from the race model and then recover the best-fitting logit and probit temperature parameters by inversion.</p>
+<section id="study-5-parameter-invariance-across-set-size" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="study-5-parameter-invariance-across-set-size"><span class="header-section-number">9.5</span> Study 5: Parameter Invariance Across Set Size</h2>
+<p>A key empirical diagnostic for distinguishing between logit and probit is parameter invariance across changes in set size <span class="math inline">\(K\)</span> <span class="citation" data-cites="Robinson2023">(<a href="#ref-Robinson2023" role="doc-biblioref">Robinson, Clevenger, and Irwin 2023</a>)</span>. If choice data are generated by a logit model, the softmax inverse temperature <span class="math inline">\(\beta_{\text{logit}}\)</span> recovered from fitting a logit specification should remain constant as <span class="math inline">\(K\)</span> increases. Conversely, if the data follow a probit model, the Gaussian noise scale <span class="math inline">\(\beta_{\text{probit}}\)</span> should be invariant to <span class="math inline">\(K\)</span>.</p>
+<p>I test this directly. For each value of <span class="math inline">\(\theta\)</span> and each set size <span class="math inline">\(K\)</span> (with a target at <span class="math inline">\(v = 1\)</span> vs.&nbsp;<span class="math inline">\(K-1\)</span> equal competitors at <span class="math inline">\(v = 0\)</span>), I compute the “true” choice probability <span class="math inline">\(P(\text{target})\)</span> from the race model and then recover the best-fitting logit and probit temperature parameters by inversion.</p>
 <div id="cell-fig-parameter-recovery" class="cell">
 <div class="cell-output-display">
 <div id="fig-parameter-recovery" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-parameter-recovery-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-parameter-recovery-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Recovered temperature parameters under logit (left) and probit (right) model assumptions, plotted as a function of set size K. Each line corresponds to a different accumulation threshold θ. At θ = 1 (exact logit), the recovered logit parameter is invariant to K, while the recovered probit parameter drifts. At large θ (approaching probit), the pattern reverses: the probit parameter is stable while the logit parameter varies. This directly parallels the empirical diagnostic of Robinson et al.&nbsp;(2023)."><img src="index_files/figure-html/fig-parameter-recovery-1.png" class="img-fluid figure-img" width="960"></a>
+<a href="index_files/figure-html/fig-parameter-recovery-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Recovered temperature parameters under logit (left) and probit (right) model assumptions as a function of set size K and accumulation threshold θ."><img src="index_files/figure-html/fig-parameter-recovery-1.png" class="img-fluid figure-img" width="960"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-parameter-recovery-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Recovered temperature parameters under logit (left) and probit (right) model assumptions, plotted as a function of set size K. Each line corresponds to a different accumulation threshold θ. At θ = 1 (exact logit), the recovered logit parameter is invariant to K, while the recovered probit parameter drifts. At large θ (approaching probit), the pattern reverses: the probit parameter is stable while the logit parameter varies. This directly parallels the empirical diagnostic of Robinson et al.&nbsp;(2023).
+Figure&nbsp;6: Recovered temperature parameters under logit (left) and probit (right) model assumptions as a function of set size K and accumulation threshold θ.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="study-6-distributional-shape-noise-skewness-and-kurtosis" class="level2" data-number="10.6">
-<h2 data-number="10.6" class="anchored" data-anchor-id="study-6-distributional-shape-noise-skewness-and-kurtosis"><span class="header-section-number">10.6</span> Study 6: Distributional Shape — Noise Skewness and Kurtosis</h2>
-<p>The log-Gamma noise distribution transitions from highly skewed (Gumbel, <span class="math inline">\(\theta = 1\)</span>) to symmetric (Gaussian, <span class="math inline">\(\theta \to \infty\)</span>). This transition in distributional shape underlies all the choice-level phenomena documented above. To make this explicit, we plot the standardised noise density for several values of <span class="math inline">\(\theta\)</span> alongside the standard normal reference.</p>
+<section id="study-6-distributional-shape-noise-skewness-and-kurtosis" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="study-6-distributional-shape-noise-skewness-and-kurtosis"><span class="header-section-number">9.6</span> Study 6: Distributional Shape — Noise Skewness and Kurtosis</h2>
+<p>The log-Gamma noise distribution transitions from highly skewed (Gumbel, <span class="math inline">\(\theta = 1\)</span>) to symmetric (Gaussian, <span class="math inline">\(\theta \to \infty\)</span>). This transition in distributional shape underlies all the choice-level phenomena documented above. To make this explicit, I plot the standardised noise density for several values of <span class="math inline">\(\theta\)</span> alongside the standard normal reference.</p>
 <div id="cell-fig-noise-densities" class="cell">
 <div class="cell-output-display">
 <div id="fig-noise-densities" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-noise-densities-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-noise-densities-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Standardised noise densities Z^(θ) for selected values of θ. At θ = 1 (Gumbel), the distribution is right-skewed. As θ increases, the density converges to the standard normal (black dashed). The right tail — which governs the probability of ‘upset’ choices in multi-alternative settings — becomes thinner with increasing θ, explaining why probit concentrates more probability on the best alternative."><img src="index_files/figure-html/fig-noise-densities-1.png" class="img-fluid figure-img" width="768"></a>
+<a href="index_files/figure-html/fig-noise-densities-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Standardised noise densities for selected values of θ. As θ increases, the density converges to the standard normal (black dashed)."><img src="index_files/figure-html/fig-noise-densities-1.png" class="img-fluid figure-img" width="768"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-noise-densities-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Standardised noise densities Z^(θ) for selected values of θ. At θ = 1 (Gumbel), the distribution is right-skewed. As θ increases, the density converges to the standard normal (black dashed). The right tail — which governs the probability of ‘upset’ choices in multi-alternative settings — becomes thinner with increasing θ, explaining why probit concentrates more probability on the best alternative.
+Figure&nbsp;7: Standardised noise densities for selected values of θ. As θ increases, the density converges to the standard normal (black dashed).
 </figcaption>
 </figure>
 </div>
@@ -489,84 +501,88 @@ Figure&nbsp;8: Skewness and excess kurtosis of the standardised log-Gamma noise 
 </div>
 </div>
 </section>
-<section id="study-7-robustness-across-utility-structures" class="level2" data-number="10.7">
-<h2 data-number="10.7" class="anchored" data-anchor-id="study-7-robustness-across-utility-structures"><span class="header-section-number">10.7</span> Study 7: Robustness Across Utility Structures</h2>
-<p>The preceding studies used specific utility vectors. To assess robustness, we examine whether the convergence pattern holds across different utility configurations that are common in psychological experiments.</p>
+<section id="study-7-robustness-across-utility-structures" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="study-7-robustness-across-utility-structures"><span class="header-section-number">9.7</span> Study 7: Robustness Across Utility Structures</h2>
+<p>The preceding studies used specific utility vectors. To assess robustness, I examine whether the convergence pattern holds across different utility configurations that are common in psychological experiments.</p>
 <div id="cell-fig-robustness" class="cell">
 <div class="cell-output-display">
 <div id="fig-robustness" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-robustness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-robustness-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Total variation distance from Probit as a function of θ for K = 5 alternatives under four qualitatively different utility structures. Uniform: all utilities equal (v = 0). Dominant: one strong alternative (v₁ = 3, others 0). Linear: linearly spaced utilities. Clustered: two groups of similar alternatives. Convergence to probit is robust across configurations, though the asymptotic TV distance (reflecting Monte Carlo noise) varies with K and utility spread."><img src="index_files/figure-html/fig-robustness-1.png" class="img-fluid figure-img" width="768"></a>
+<a href="index_files/figure-html/fig-robustness-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Total variation distance from Probit as a function of θ for K = 5 alternatives under four utility structures: uniform, dominant, linear, and clustered."><img src="index_files/figure-html/fig-robustness-1.png" class="img-fluid figure-img" width="768"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-robustness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Total variation distance from Probit as a function of θ for K = 5 alternatives under four qualitatively different utility structures. Uniform: all utilities equal (v = 0). Dominant: one strong alternative (v₁ = 3, others 0). Linear: linearly spaced utilities. Clustered: two groups of similar alternatives. Convergence to probit is robust across configurations, though the asymptotic TV distance (reflecting Monte Carlo noise) varies with K and utility spread.
+Figure&nbsp;9: Total variation distance from Probit as a function of θ for K = 5 alternatives under four utility structures: uniform, dominant, linear, and clustered.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="summary-1" class="level2" data-number="10.8">
-<h2 data-number="10.8" class="anchored" data-anchor-id="summary-1"><span class="header-section-number">10.8</span> Summary</h2>
+<section id="summary" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="summary"><span class="header-section-number">9.8</span> Summary</h2>
 <p>These multinomial simulations confirm and extend the binary-case results:</p>
 <ol type="1">
 <li><p><strong>Convergence is gradual and universal</strong>: Across different values of <span class="math inline">\(K\)</span> and different utility structures, the Poisson count race converges to the Multinomial Probit reference within <span class="math inline">\(\theta \approx 50\)</span>–<span class="math inline">\(100\)</span> in total variation distance.</p></li>
 <li><p><strong>Probability redistribution</strong>: As <span class="math inline">\(\theta\)</span> increases, the probit model concentrates more probability on the best alternative and less on inferior alternatives, reflecting the thinner tails of Gaussian noise relative to Gumbel.</p></li>
-<li><p><strong>Set-size scaling</strong>: The logit and probit models predict systematically different scaling of target choice probability with the number of competitors. The Poisson count race interpolates between these two patterns, connecting to the empirical findings of Robinson et al.&nbsp;(2023).</p></li>
+<li><p><strong>Set-size scaling</strong>: The logit and probit models predict systematically different scaling of target choice probability with the number of competitors. The Poisson count race interpolates between these two patterns, connecting to the empirical findings of <span class="citation" data-cites="Robinson2023">Robinson, Clevenger, and Irwin (<a href="#ref-Robinson2023" role="doc-biblioref">2023</a>)</span>.</p></li>
 <li><p><strong>IIA erosion</strong>: The Independence of Irrelevant Alternatives property, which holds exactly at <span class="math inline">\(\theta = 1\)</span>, is progressively violated as <span class="math inline">\(\theta\)</span> increases. This provides a process-level account of why IIA holds for logit but not probit: it is a consequence of the Gumbel noise shape, and alternative noise shapes—induced by higher accumulation thresholds—do not preserve it.</p></li>
-<li><p><strong>Parameter invariance</strong>: When choice data generated by the Poisson count race are fit under a logit assumption, the recovered inverse temperature drifts with set size <span class="math inline">\(K\)</span> for all <span class="math inline">\(\theta &gt; 1\)</span>. Conversely, when fit under a probit assumption, the recovered noise scale remains stable for large <span class="math inline">\(\theta\)</span> but drifts when <span class="math inline">\(\theta\)</span> is small. This cross-over in parameter invariance provides a process-level account of the empirical findings of Robinson et al.&nbsp;(2023): parameter stability across <span class="math inline">\(K\)</span> is diagnostic of whether the effective noise distribution is closer to Gumbel or Gaussian.</p></li>
+<li><p><strong>Parameter invariance</strong>: When choice data generated by the Poisson count race are fit under a logit assumption, the recovered inverse temperature drifts with set size <span class="math inline">\(K\)</span> for all <span class="math inline">\(\theta &gt; 1\)</span>. Conversely, when fit under a probit assumption, the recovered noise scale remains stable for large <span class="math inline">\(\theta\)</span> but drifts when <span class="math inline">\(\theta\)</span> is small. This cross-over in parameter invariance provides a process-level account of the empirical findings of <span class="citation" data-cites="Robinson2023">Robinson, Clevenger, and Irwin (<a href="#ref-Robinson2023" role="doc-biblioref">2023</a>)</span>: parameter stability across <span class="math inline">\(K\)</span> is diagnostic of whether the effective noise distribution is closer to Gumbel or Gaussian.</p></li>
 <li><p><strong>Noise shape transition</strong>: The underlying mechanism is a smooth transition in the shape of the standardised noise distribution, from the skewed Gumbel (<span class="math inline">\(\theta = 1\)</span>) to the symmetric Gaussian (<span class="math inline">\(\theta \to \infty\)</span>). The skewness and kurtosis decay at known rates, providing analytic control over the approximation quality.</p></li>
 </ol>
 </section>
 </section>
-<section id="discussion" class="level1" data-number="11">
-<h1 data-number="11"><span class="header-section-number">11</span> Discussion</h1>
-<p>The present work develops a generative framework in which two foundational discrete choice models—Multinomial Logit and Multinomial Probit—arise as endpoint regimes of a single stochastic accumulation process. By introducing a Poisson count race and a temperature identification that separates noise scale from noise shape, we provide a principled account of how extreme-value and Gaussian choice behavior can emerge from different stopping rules applied to the same underlying mechanism.</p>
-<p>The goal of this paper is not to advocate replacing existing models, but to clarify their relationship. Logit and probit are often treated as competing assumptions about the distribution of unobserved utility noise. Our results suggest a different interpretation: these models correspond to distinct regimes of evidence accumulation, characterized by how much stochastic evidence is required before commitment.</p>
-<p>While the binary case simulation provides a useful starting point for developing intuition and for establishing the endpoint results analytically, it is not where the distinction between logit and probit is most consequential. In binary choice, many distributional differences collapse to one-dimensional comparisons, and logit and probit are well known to yield closely aligned predictions under variance matching. For this reason, a central question is whether the proposed accumulation-based unification extends beyond binary choice and meaningfully differentiates behavior in multi-alternative settings, where independence assumptions and cross-option dependence play a decisive role. To address this question, we examined the behavior of the Poisson count race in the multinomial case through targeted simulation studies.</p>
-<p>The multinomial setting further clarifies the contribution of the Poisson count race. While the logit–probit distinction is often discussed in binary choice, its practical significance lies in multi-alternative settings, where independence-of-irrelevant-alternatives and cross-option dependence become central. Our multinomial simulations show that thresholded accumulation induces systematic, graded violations of IIA as the accumulation threshold increases. Under temperature identification, these violations converge toward the dependence structure characteristic of multinomial probit. Importantly, this dependence is not imposed by construction but emerges endogenously from the accumulation and stopping rule. This provides a generative account of how probit-like behavior can arise from the same underlying mechanism that yields logit at a single-event threshold.</p>
-<section id="relation-to-existing-choice-models" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="relation-to-existing-choice-models"><span class="header-section-number">11.1</span> Relation to existing choice models</h2>
-<p>From a mathematical standpoint, all components of the present framework are classical. Exponential races yield Luce’s choice rule, Gamma waiting times arise from accumulated Poisson events, and asymptotic normality follows from the Central Limit Theorem. The contribution lies in assembling these elements into a single, coherent generative family and identifying the conditions under which its limiting behavior remains non-degenerate.</p>
-<p>This synthesis clarifies why logit and probit models often behave similarly in practice, particularly under variance matching, while also explaining why they diverge systematically in multi-alternative settings. Rather than viewing these differences as artifacts of arbitrary distributional assumptions, the Poisson count race shows how they arise naturally from differences in stopping rules.</p>
-<p>Importantly, the present model should not be conflated with full sequential sampling models such as the Diffusion Decision Model or Linear Ballistic Accumulator. Those models are designed to jointly account for response times and accuracy and typically involve continuous accumulation with explicit drift and boundary parameters. The Poisson count race, by contrast, is deliberately minimal: it uses accumulation as a generative device to induce a family of random utility models, without making claims about within-trial dynamics or response time distributions. In this sense, it occupies an intermediate position between static random utility formulations and full dynamical decision models.</p>
-<p>A closely related work is the dependent Poisson race model of Ruan et al.&nbsp;(2008), who develop a thresholded accumulation process for binary conjoint choice. In their model, discrete Poisson “hits” accrue until a fixed integer threshold is reached, and dependence between alternatives is introduced via shared Poisson components tied to overlapping attributes. Their primary contribution is behavioral and statistical: modeling dominance and similarity effects in conjoint choice and improving predictive performance relative to independent race models and multinomial logit.</p>
-<p>The present work overlaps with this literature in its use of Poisson accumulation and thresholded stopping rules. In particular, we do not claim novelty in the observation that the classical exponential race underlying Luce’s choice axiom corresponds to a single-event threshold, nor in the existence of thresholded Poisson race models more generally.</p>
-<p>Our focus, however, is different. Whereas prior work emphasizes dependence structures and behavioral phenomena, we focus on the distributional consequences of thresholded accumulation and the resulting random utility representations. By restricting attention to independent races, we make explicit the induced log-Gamma utility noise and analyze how its shape varies systematically with the accumulation threshold.</p>
-<p>Crucially, we introduce a variance-preserving (temperature) identification that separates noise scale from noise shape. Without this identification, increasing the threshold trivially drives the model toward deterministic choice. With it, the large-threshold regime remains non-degenerate and admits a well-defined asymptotic limit. Under this identification, multinomial logit arises exactly at threshold one, while multinomial probit emerges as an asymptotic regime as the threshold grows.</p>
-<p>Finally, our results are stated for general <span class="math inline">\(K\)</span>-alternative choice. While thresholded Poisson races have been explored primarily in binary settings, the logit–probit distinction is most consequential in multinomial choice, where independence properties and correlation structures become central. By deriving both multinomial logit and multinomial probit within a single generative framework, we clarify their relationship in precisely the setting where their differences matter most.</p>
+<section id="discussion" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Discussion</h1>
+<p>The present work develops a generative framework in which Multinomial Logit and Multinomial Probit arise as endpoint regimes of a single stochastic accumulation process. By introducing a Poisson count race and a temperature identification that separates noise scale from noise shape, this paper clarifies how extreme-value and Gaussian choice behavior emerge from different stopping rules applied to the same underlying mechanism. The goal is not to advocate replacing existing models, but to clarify their relationship: logit and probit correspond to distinct regimes of evidence accumulation, characterized by how much stochastic evidence is required before commitment.</p>
+<p>The multinomial simulations demonstrate that this unification is not merely a theoretical curiosity. Thresholded accumulation induces systematic, graded violations of IIA that converge toward the dependence structure characteristic of multinomial probit. This dependence emerges endogenously from the accumulation and stopping rule, rather than being imposed by construction. The parameter invariance results further connect the framework to recent empirical findings <span class="citation" data-cites="Robinson2023">(<a href="#ref-Robinson2023" role="doc-biblioref">Robinson, Clevenger, and Irwin 2023</a>)</span>, providing a process-level account of why Gaussian-based parameters exhibit greater stability across changes in set size.</p>
+<section id="relation-to-existing-models" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="relation-to-existing-models"><span class="header-section-number">10.1</span> Relation to existing models</h2>
+<p>From a mathematical standpoint, all components of the present framework are classical: exponential races yield Luce’s choice rule, Gamma waiting times arise from accumulated Poisson events, and asymptotic normality follows from the Central Limit Theorem. The contribution lies in assembling these elements into a single generative family and identifying the conditions under which its limiting behavior remains non-degenerate.</p>
+<p>The present model should not be conflated with full sequential sampling models such as the Diffusion Decision Model or Linear Ballistic Accumulator. Those models jointly account for response times and accuracy via continuous accumulation with explicit drift and boundary parameters. The Poisson count race is deliberately minimal: it uses accumulation as a generative device to induce a family of random utility models, without making claims about within-trial dynamics or response time distributions.</p>
+<p>Between the logit and probit endpoints lies a continuum of log-Gamma random utility models. These intermediate regimes are not intended as new default specifications, but they underscore that logit and probit are special cases of a broader family. Deviations from logit or probit behavior may sometimes reflect differences in accumulation thresholds rather than fundamentally different noise sources.</p>
 </section>
-<section id="temperature-identification-and-model-comparison" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="temperature-identification-and-model-comparison"><span class="header-section-number">11.2</span> Temperature identification and model comparison</h2>
-<p>A central technical step in the present work is the introduction of a temperature identification that standardizes the variance of the stochastic utility component across values of the accumulation threshold. Without this identification, increasing the threshold trivially drives the model toward deterministic choice, obscuring the effect of changing noise shape.</p>
-<p>By fixing the scale of stochasticity and allowing only its shape to vary, the temperature-identified Poisson count race makes it possible to meaningfully compare models with different error distributions. This perspective reframes familiar variance-matching arguments in a generative context: rather than adjusting scale parameters post hoc to align predictions, scale normalization becomes an intrinsic part of the model definition.</p>
-<p>Under this identification, the large-threshold limit yields a genuine Multinomial Probit model, not merely an approximation. This provides a process-level interpretation of probit that parallels the classical exponential race interpretation of logit and helps explain why Gaussian assumptions often exhibit greater parameter stability across changes in task structure.</p>
+<section id="implications-for-empirical-modeling" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="implications-for-empirical-modeling"><span class="header-section-number">10.2</span> Implications for empirical modeling</h2>
+<p>The present framework offers a theoretical account of why logit-based and probit-based models may differ in parameter invariance across task structures. Models with larger effective accumulation thresholds naturally exhibit Gaussian-like behavior, which may confer greater stability across changes in the number of alternatives. At the same time, the results caution against interpreting superior empirical performance of one model class as evidence for a particular noise distribution in isolation: differences between logit and probit may reflect differences in decision criteria or commitment thresholds rather than differences in representational noise per se.</p>
 </section>
-<section id="intermediate-regimes-and-log-gamma-utility-noise" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="intermediate-regimes-and-log-gamma-utility-noise"><span class="header-section-number">11.3</span> Intermediate regimes and log-Gamma utility noise</h2>
-<p>Between the logit and probit endpoints lies a continuum of models characterized by log-Gamma utility noise. These intermediate regimes are not intended as new “default” choice models, but they may be useful in settings where the strict independence properties of logit are too restrictive, while the computational complexity of probit is undesirable.</p>
-<p>From a theoretical perspective, the existence of these intermediate regimes underscores that logit and probit are not isolated modeling choices, but special cases of a broader family. From a practical perspective, they suggest that deviations from logit or probit behavior may sometimes reflect differences in accumulation thresholds rather than fundamentally different noise sources.</p>
+<section id="limitations-and-extensions" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="limitations-and-extensions"><span class="header-section-number">10.3</span> Limitations and extensions</h2>
+<p>The Poisson count race is intentionally simple. It assumes independent accumulation processes and focuses exclusively on choice probabilities, abstracting away from response times and within-trial dynamics. Extensions that allow correlated accumulators, time-varying rates, or joint modeling of choice and response time are natural directions for future work.</p>
+<p>The present analysis treats the accumulation threshold as fixed across trials and alternatives. Allowing threshold variability or adaptive stopping rules could further enrich the family of induced choice models and connect more directly to theories of decision caution and speed–accuracy trade-offs.</p>
+<p>The model positions the Poisson count race as a parametric family indexed by <span class="math inline">\((\theta, \beta)\)</span>, but a formal identification analysis is beyond the present scope. In principle, <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\beta\)</span> play distinct roles—shape versus scale of the noise distribution—and the shape of the psychometric function or the pattern of IIA violations could serve to identify <span class="math inline">\(\theta\)</span> from choice data. Whether these parameters are jointly identifiable from aggregate choice frequencies alone, and under what experimental designs, remains an open question for future investigation.</p>
+<p>Finally, the framework naturally invites comparison with other random utility specifications. Exploring whether additional classical models arise as limiting regimes under alternative accumulation rules may provide further insight into the structure of discrete choice behavior.</p>
 </section>
-<section id="implications-for-empirical-modeling" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="implications-for-empirical-modeling"><span class="header-section-number">11.4</span> Implications for empirical modeling</h2>
-<p>Recent empirical work has emphasized differences in parameter invariance and generalization between logit-based and signal-detection-based models across task structures. The present framework complements this line of research by offering a theoretical account of why such differences may arise. In particular, models with larger effective accumulation thresholds naturally exhibit Gaussian-like behavior, which may confer greater stability across changes in the number of alternatives or decision format.</p>
-<p>At the same time, the present results caution against interpreting superior empirical performance of one model class as evidence for a particular noise distribution in isolation. Differences between logit and probit may reflect differences in decision criteria or commitment thresholds rather than differences in representational noise per se.</p>
-</section>
-<section id="limitations-and-extensions" class="level2" data-number="11.5">
-<h2 data-number="11.5" class="anchored" data-anchor-id="limitations-and-extensions"><span class="header-section-number">11.5</span> Limitations and extensions</h2>
-<p>The Poisson count race is intentionally simple. It assumes independent accumulation processes and focuses exclusively on choice probabilities, abstracting away from response times and within-trial dynamics. Extensions that relax these assumptions—by allowing correlated accumulators, time-varying rates, or joint modeling of choice and response time—are natural directions for future work.</p>
-<p>Another limitation is that the present analysis treats the accumulation threshold as fixed across trials and alternatives. Allowing threshold variability or adaptive stopping rules could further enrich the family of induced choice models and connect more directly to theories of decision caution and speed–accuracy trade-offs.</p>
-<p>Finally, while the present paper focuses on the relationship between logit and probit, the framework naturally invites comparison with other random utility specifications. Exploring whether additional classical models arise as limiting regimes under alternative accumulation rules may provide further insight into the structure of discrete choice behavior.</p>
-</section>
-<section id="concluding-remarks" class="level2" data-number="11.6">
-<h2 data-number="11.6" class="anchored" data-anchor-id="concluding-remarks"><span class="header-section-number">11.6</span> Concluding remarks</h2>
-<p>By grounding discrete choice models in a common stochastic accumulation process, the Poisson count race reframes a long-standing modeling distinction in a new light. Logit and probit emerge not as competing assumptions about utility noise, but as endpoint regimes corresponding to different stopping rules applied to the same underlying mechanism.</p>
-<p>This unification does not diminish the practical differences between these models, but it clarifies their conceptual relationship and provides a principled basis for comparison. More broadly, it illustrates how process-level reasoning can illuminate the structure of static choice models and suggests that some longstanding modeling dichotomies may reflect differences in perspective rather than fundamental incompatibilities.</p>
+<section id="concluding-remarks" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="concluding-remarks"><span class="header-section-number">10.4</span> Concluding remarks</h2>
+<p>By grounding discrete choice models in a common stochastic accumulation process, the Poisson count race reframes a long-standing modeling distinction. Logit and probit emerge not as competing assumptions about utility noise, but as endpoint regimes corresponding to different stopping rules applied to the same underlying mechanism. This unification clarifies their conceptual relationship and provides a principled basis for comparison, illustrating how process-level reasoning can illuminate the structure of static choice models.</p>
+
 </section>
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-BockJones1968" class="csl-entry" role="listitem">
+Bock, R. Darrell, and Lyle V. Jones. 1968. <em>The Measurement and Prediction of Judgment and Choice</em>. San Francisco: Holden-Day.
+</div>
+<div id="ref-Luce1959" class="csl-entry" role="listitem">
+Luce, R. Duncan. 1959. <em>Individual Choice Behavior: A Theoretical Analysis</em>. New York: John Wiley &amp; Sons.
+</div>
+<div id="ref-McFadden1974" class="csl-entry" role="listitem">
+McFadden, Daniel. 1974. <span>“Conditional Logit Analysis of Qualitative Choice Behavior.”</span> Edited by P. Zarembka. <em>Frontiers in Econometrics</em>, 105–42.
+</div>
+<div id="ref-Robinson2023" class="csl-entry" role="listitem">
+Robinson, Maria M., John Clevenger, and David E. Irwin. 2023. <span>“Are Visual Working Memory Representations Abstract? A Critical Test with Signal Detection and <span>Luce</span>’s Choice Rule.”</span> <em>Psychological Review</em> 130 (4): 1032–55. <a href="https://doi.org/10.1037/rev0000411">https://doi.org/10.1037/rev0000411</a>.
+</div>
+<div id="ref-Ruan2008" class="csl-entry" role="listitem">
+Ruan, Shiling, Steven N. MacEachern, Thomas Otter, and Angela M. Dean. 2008. <span>“The Dependent Poisson Race Model and Modeling Dependence in Conjoint Choice Experiments.”</span> <em>Psychometrika</em> 73 (2): 261–88. <a href="https://doi.org/10.1007/s11336-007-9032-x">https://doi.org/10.1007/s11336-007-9032-x</a>.
+</div>
+<div id="ref-Thurstone1927" class="csl-entry" role="listitem">
+Thurstone, L. L. 1927. <span>“A Law of Comparative Judgment.”</span> <em>Psychological Review</em> 34 (4): 273–86. <a href="https://doi.org/10.1037/h0070288">https://doi.org/10.1037/h0070288</a>.
+</div>
+<div id="ref-Yellott1977" class="csl-entry" role="listitem">
+Yellott, John I. 1977. <span>“The Relationship Between <span>Luce</span>’s Choice Axiom, <span>Thurstone</span>’s Theory of Comparative Judgment, and the Double Exponential Distribution.”</span> <em>Journal of Mathematical Psychology</em> 15 (2): 109–44. <a href="https://doi.org/10.1016/0022-2496(77)90026-8">https://doi.org/10.1016/0022-2496(77)90026-8</a>.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
