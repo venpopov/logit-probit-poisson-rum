@@ -14,6 +14,8 @@ The `mcp.json` file configures the zotero-mcp server for local Zotero access.
    # or
    uv tool install "git+https://github.com/54yyyu/zotero-mcp.git"
    ```
+   
+   **Note:** The `zotero-mcp` command must be in your PATH. If using `pip install`, ensure your Python scripts directory is in PATH. With `uv tool install`, this is handled automatically.
 
 2. **Configure zotero-mcp:**
    ```bash

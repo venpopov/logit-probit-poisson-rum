@@ -53,6 +53,8 @@ The corrected information:
 }
 ```
 
+> **Note on "type: local"**: Despite using the Web API, the type is "local" because the MCP server runs locally in the coding agent's sandbox (via `npx`). The "local" refers to how the MCP server is executed (as a local process), not where the Zotero data comes from. The server itself then connects to the Zotero Web API using your credentials.
+
 3. Click "Save"
 
 ### Step 4: Use It!

@@ -145,6 +145,8 @@ As of early 2026, GitHub allows **repository administrators to configure custom 
    }
    ```
    - Click "Save"
+   
+   > **Note on "type: local"**: The type is "local" because the MCP server runs locally in the coding agent's sandbox (via `npx`). The "local" refers to how the MCP server is executed (as a local process), not where the Zotero data comes from. The server itself then connects to the Zotero Web API using your credentials.
 
 4. **Use the coding agent:**
    - Open an issue or PR and ask the coding agent to:
