@@ -4,7 +4,13 @@
 
 Yes, it is possible to connect your Zotero library to AI assistants using the **Model Context Protocol (MCP)**. The most mature solution is the [zotero-mcp](https://github.com/54yyyu/zotero-mcp) server by 54yyyu, which exposes your Zotero library to any MCP-compatible AI client. This enables AI agents to search your library, retrieve metadata, and **export BibTeX entries** — which is exactly what's needed to populate `references.bib`.
 
-## What Works Today
+**Key capabilities:**
+- ✅ **VS Code Copilot Chat** - Works with local or web API
+- ✅ **GitHub Copilot Coding Agent** - Works via web API and repository MCP configuration
+- ✅ **Claude Desktop** - Works with local or web API  
+- ✅ **Other MCP clients** - ChatGPT, Cursor, Cherry Studio, Chorus, etc.
+
+## Supported Platforms and Clients
 
 ### 1. VS Code Copilot Chat + zotero-mcp (Local — Recommended)
 
@@ -90,19 +96,77 @@ zotero-mcp works with any MCP-compatible client, including:
 - [Chorus](https://chorus.sh)
 - ChatGPT (via SSE transport + ngrok tunnel — see [setup guide](https://github.com/54yyyu/zotero-mcp/blob/main/docs/getting-started.md))
 
-## What Does NOT Work (Yet)
+## GitHub Copilot Coding Agent (github.com web-based)
 
-### GitHub Copilot Coding Agent (github.com web-based)
+### ✅ What DOES Work: Web API Configuration
 
-The **GitHub Copilot coding agent** that runs on github.com (i.e., the agent that processes issues and creates PRs in a sandboxed cloud environment) **cannot** connect to your local Zotero library. This is because:
+The **GitHub Copilot coding agent** that runs on github.com (the agent that processes issues and creates PRs in a sandboxed cloud environment) **CAN** connect to your Zotero library using the **Zotero Web API** via custom MCP server configuration.
 
-1. **The agent runs in a cloud sandbox** — it has no access to your local machine where Zotero runs.
-2. **MCP servers must be local or web-accessible** — the agent would need your Zotero library exposed via the Zotero Web API, but it currently does not support user-configured MCP servers.
-3. **No custom MCP server support** — as of early 2026, the GitHub Copilot coding agent only has access to a fixed set of MCP tools (GitHub API, browser, filesystem within the sandbox). Users cannot add custom MCP servers to it.
+As of early 2026, GitHub allows **repository administrators to configure custom MCP servers** for the Copilot coding agent. This is done via JSON configuration in the repository settings. Combined with zotero-mcp's Web API support, this enables the coding agent to:
 
-**Workaround for the coding agent:** Use Better BibTeX's [auto-export](https://retorque.re/zotero-better-bibtex/exporting/auto/) feature to keep `references.bib` automatically synced. Right-click your collection in Zotero, choose "Export Collection…", select the "Better BibTeX" translator, and check `Keep updated`. Any changes to the collection will trigger an automatic re-export. You can configure this to run "on change", "on idle", or "paused" (manual) in the BBT preferences.
+- Search your Zotero library for papers by title, author, or keywords
+- Retrieve BibTeX-formatted citation data
+- Insert citation keys and populate `references.bib`
 
-BBT auto-export also supports **git integration**: if you set `git config zotero.betterbibtex.push true` in your repo clone, BBT will automatically commit and push the updated `.bib` file whenever the export runs. This keeps `references.bib` in your GitHub repo always up to date, so the cloud-based coding agent can at least *read* existing citations when making edits.
+**Setup steps:**
+
+1. **Get your Zotero Web API credentials:**
+   - Go to https://www.zotero.org/settings/keys
+   - Click "Create new private key"
+   - Give it a name (e.g., "GitHub Copilot MCP")
+   - Under "Personal Library", select "Allow library access" with "Read Only" permission
+   - Click "Save Key" and copy your API key
+   - Your user ID is shown on the same page (e.g., `123456`)
+
+2. **Configure repository secrets:**
+   - Go to your repository on GitHub → Settings → Secrets and variables → Codespaces
+   - Click "New repository secret"
+   - Add `COPILOT_MCP_ZOTERO_API_KEY` with your Zotero API key as the value
+   - Add `COPILOT_MCP_ZOTERO_LIBRARY_ID` with your Zotero user ID as the value
+
+3. **Configure MCP server for Copilot coding agent:**
+   - Go to your repository → Settings → Copilot → Coding agent
+   - In the "MCP configuration" section, add:
+   ```json
+   {
+     "mcpServers": {
+       "zotero": {
+         "type": "local",
+         "command": "npx",
+         "args": ["-y", "zotero-mcp@latest"],
+         "env": {
+           "ZOTERO_API_KEY": "COPILOT_MCP_ZOTERO_API_KEY",
+           "ZOTERO_LIBRARY_ID": "COPILOT_MCP_ZOTERO_LIBRARY_ID",
+           "ZOTERO_LIBRARY_TYPE": "user"
+         },
+         "tools": ["zotero_search_items", "zotero_get_item_metadata", "zotero_get_collections", "zotero_get_tags", "zotero_get_recent"]
+       }
+     }
+   }
+   ```
+   - Click "Save"
+   
+   > **Note on "type: local"**: The type is "local" because the MCP server runs locally in the coding agent's sandbox (via `npx`). The "local" refers to how the MCP server is executed (as a local process), not where the Zotero data comes from. The server itself then connects to the Zotero Web API using your credentials.
+
+4. **Use the coding agent:**
+   - Open an issue or PR and ask the coding agent to:
+     - *"Search my Zotero library for papers by McFadden on conditional logit and add the BibTeX entry to references.bib"*
+     - *"Find papers on random utility models in my Zotero library and cite them in the introduction"*
+
+> **Note:** The coding agent runs in a cloud sandbox, so it uses the **Zotero Web API** (not local API). Your Zotero desktop application does not need to be running, but your library must be synced to zotero.org.
+
+> **Security:** Only enable read-only tools (`zotero_search_items`, `zotero_get_item_metadata`, etc.). Avoid `*` (all tools) to prevent write operations.
+
+### Alternative: Better BibTeX Auto-Export
+
+If you prefer not to configure the Web API, you can use Better BibTeX's [auto-export](https://retorque.re/zotero-better-bibtex/exporting/auto/) feature to keep `references.bib` automatically synced:
+
+1. Right-click your collection in Zotero → "Export Collection…"
+2. Select "Better BibTeX" translator and check `Keep updated`
+3. Export to your repo's `references.bib`
+4. (Optional) Enable git integration: `git config zotero.betterbibtex.push true` in your repo
+
+This keeps `references.bib` in your GitHub repo always up to date, so the coding agent can *read* existing citations when making edits (but cannot search your library or add new citations autonomously).
 
 ## Better BibTeX CAYW (Cite As You Write)
 
@@ -156,6 +220,8 @@ The key tool for citation management is `zotero_get_item_metadata` with `format=
 
 For this Quarto manuscript project, the recommended workflow is:
 
+### For Local Development (VS Code):
+
 1. **Install zotero-mcp** and **Better BibTeX** in Zotero
 2. **Configure VS Code** with the MCP server in `.vscode/mcp.json` (see setup above)
 3. **Use Copilot Chat in agent mode** to:
@@ -163,9 +229,28 @@ For this Quarto manuscript project, the recommended workflow is:
    - Ask it to add citations: *"Add @yellottRelationshipLucesChoice1977 to the discussion section and make sure it's in references.bib"*
    - Ask it to bulk-add references: *"Search my Zotero for all papers on random utility models and add their BibTeX entries to references.bib"*
 
-4. **Set up Better BibTeX auto-export with git push** for your `references.bib`:
-   - Right-click your collection → Export Collection → Better BibTeX → check `Keep updated`
-   - Export to your repo's `references.bib`
-   - Run `git config zotero.betterbibtex.push true` in your repo
-   - Now BBT will auto-commit and push `references.bib` whenever citations change
-   - The **GitHub Copilot coding agent** (web-based) can then use the always-up-to-date `references.bib` when making edits
+### For GitHub Copilot Coding Agent:
+
+1. **Set up Web API credentials** (see GitHub Copilot Coding Agent section above)
+2. **Configure repository secrets** with `COPILOT_MCP_ZOTERO_API_KEY` and `COPILOT_MCP_ZOTERO_LIBRARY_ID`
+3. **Add MCP configuration** in repository settings (Settings → Copilot → Coding agent)
+4. **Create issues or PRs** and ask the coding agent to search your library and add citations
+
+### For Both:
+
+- **Set up Better BibTeX auto-export with git push** for your `references.bib`:
+  - Right-click your collection → Export Collection → Better BibTeX → check `Keep updated`
+  - Export to your repo's `references.bib`
+  - Run `git config zotero.betterbibtex.push true` in your repo
+  - Now BBT will auto-commit and push `references.bib` whenever citations change
+  - This keeps `references.bib` always up to date for all environments
+
+## Additional Resources
+
+- [GitHub Docs: Extend Coding Agent with MCP](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp)
+- [GitHub Docs: MCP and GitHub Copilot Coding Agent](https://docs.github.com/en/copilot/concepts/coding-agent/mcp-and-coding-agent)
+- [zotero-mcp GitHub Repository](https://github.com/54yyyu/zotero-mcp)
+- [zotero-mcp Documentation](https://stevenyuyy.us/zotero-mcp/)
+- [VS Code MCP Documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)
+- [Better BibTeX Documentation](https://retorque.re/zotero-better-bibtex/)
+- [Model Context Protocol Specification](https://modelcontextprotocol.io/introduction)
