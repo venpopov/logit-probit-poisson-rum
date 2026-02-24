@@ -43,6 +43,7 @@ quarto render                    # Render full website to _manuscript
 - Commit secrets or `.env` files
 - Modify content within `<!-- BEGIN USER-SPECIFIED -->` blocks
 - Modify files in `data-raw`, `archive`, `_freeze`, `_manuscript`, `renv`
+- Add descriptive comments that are redundant with the code
 
 ## User-Specified Content
 

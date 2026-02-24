@@ -5,8 +5,7 @@ authors:
     affiliation: Department of Psychology, University of Zurich
     corresponding: true
 abstract: |
-  This study unifies the two canonical discrete choice specifications--Multinomial Logit and Multinomial Probit--within a single generative framework. I introduce a **Poisson Count Race**, wherein $K$ alternatives generate events according to independent Poisson processes. A choice is determined when an alternative reaches a cumulative count threshold $\theta$. At the threshold $\theta=1$, the model yields the Multinomial Logit (Luce choice rule). By normalizing the utility noise to maintain a constant variance--a process termed temperature identification--I show that as $\theta \to \infty$, the model converges to the Multinomial Probit. This formulation provides a parametric bridge in which $\theta$ governs the shape of the error distribution and a separate parameter, $\beta$, modulates the temperature, while the systematic utilities $v_i$ are shared across all regimes. Crucially, this bridge arises from a single stochastic accumulation mechanism rather than from post hoc variance matching between distinct models.
-bibliography: references.bib
+  This study unifies the two canonical discrete choice specifications - multinomial logit and multinomial probit - within a single count process. The model uses a Poisson count process race, wherein $K$ alternatives generate events according to independent Poisson processes. A choice is determined when an alternative reaches a cumulative count threshold $\theta$. At the single-event threshold, $\theta=1$, the model yields the Multinomial Logit (Luce choice rule). By normalizing the utility noise to maintain a constant variance, I show that as $\theta \to \infty$, the model converges to the Multinomial Probit. This formulation provides a parametric bridge in which $\theta$ governs the shape of the error distribution and a separate parameter, $\beta$, modulates the variance, while the systematic utilities $v_i$ are shared across all regimes. The generalized model uses a single stochastic accumulation mechanism: both regimes belong to the log-Gamma random utility family, with $\theta$ governing the transition between Gumbel and Gaussian noise shapes. The unification is distributional rather than dynamical: changes in $\theta$ do not represent a single decision-making system adjusting its threshold in real time, but rather compare different accumulation regimes at matched discriminability.
 number-sections: true
 keywords:
   - discrete choice
@@ -17,7 +16,20 @@ keywords:
   - evidence accumulation
 execute: 
   cache: true
+draft:
+  true
 ---
+
+```{r init}
+#| cache: false
+source("R/race_functions.R")
+source("R/model_illustrations.R")
+
+library(ggplot2)
+library(ggdist)
+library(distributional)
+library(patchwork)
+```
 
 # Introduction
 
@@ -33,31 +45,56 @@ $$
 C = \arg \max_{i \in K} U_{i}
 $$
 
-Within this general framework, different assumptions about the distribution of errors,  $\epsilon_i$, determine the structure of the choice model and its predictions. Two important classes dominate the field: logit-based models, derived from Luce's choice axiom and extreme-value theory [@luceIndividualChoiceBehavior1959; @yellottRelationshipLucesChoice1977;  @mcfaddenConditionalLogitAnalysis1974], and probit-based models, derived from Thurstone's Theory of comparative judgements and gaussian Signal Detection Theory [@robinsonHowPeopleBuild2023; @thurstoneLawComparativeJudgment1927; @hausmanConditionalProbitModel1978a]. These two model families correspond to two types of error distributions:
+While the term "utility" implies an economic setting, the underlying mathematical model concerns any situation in which choices are probabilistic. The core concept is that of a shared *random scale* on which multiple latent variables, each associated with a different choice, are represented. Any choice model that implements this assumption, together with the max choice rule, is said to have a random-scale representation or to be random-scale representible [@falmagneRepresentationTheoremFinite1978a; @kellenTestingFoundationsSignal2021].
+
+Within this general framework, different assumptions about the distribution of errors,  $\epsilon_i$, determine the structure of the choice model and its predictions. Two important classes dominate the field: logit-based models, derived from Luce's choice axiom and extreme-value theory [@luceIndividualChoiceBehavior1959; @yellottRelationshipLucesChoice1977;  @mcfaddenConditionalLogitAnalysis1974], and probit-based models, derived from Thurstone's Theory of comparative judgements and gaussian Signal Detection Theory [@robinsonHowPeopleBuild2023; @thurstoneLawComparativeJudgment1927; @hausmanConditionalProbitModel1978a; @wixtedForgottenHistorySignal2020]. These two model families correspond to two types of error distributions:
 
 1.  **Gumbel Errors:** If the $\epsilon_i$ terms are independent and identically distributed (i.i.d.) according to a Type I Extreme Value distribution, the choice probabilities follow the **Multinomial Logit (MNL)** or Softmax form.
 
 2.  **Gaussian Errors:** If the $\epsilon_i$ terms follow a Multivariate Normal distribution (potentially allowing for correlated errors across alternatives) the choice probabilities are described by the **Multinomial Probit (MNP)** model.
 
+```{r}
+#| label: fig-rum-overview
+#| fig-cap: "The two canonical random utility models. Left panels show the noise distributions for each alternative, with a single random draw from each (the winning draw is highlighted). Right panels show the corresponding choice probability formulas. Top row: Gumbel (Type I Extreme Value) noise yields the Multinomial Logit (Softmax). Bottom row: Gaussian noise yields the Multinomial Probit."
+#| fig-height: 8
+#| fig-width: 10
+utilities <- seq(0, 2, length.out = 8)
+norm_util <- plot_utility_distributions(utilities,
+  dist_fun = dist_normal,
+  title = "Gaussian (Normal) noise",
+  sd = 1
+)
+gumbel_util <- plot_utility_distributions(utilities,
+  dist_fun = dist_gumbel,
+  title = "Gumbel (Type I EV) noise",
+  scale = sqrt(6) / pi
+)
+
+softmax_eq <- plot_softmax_equation()
+probit_eq  <- plot_probit_equation()
+
+(gumbel_util | softmax_eq) / (norm_util | probit_eq)
+```
+
 The random utility framework thus unifies axiomatic choice models [@luceIndividualChoiceBehavior1959] and measurement detection-based models [@thurstoneLawComparativeJudgment1927] under a single functional form. However, the unification currently stops there - the different error distributions reflect different assumptions about the generating process. As @robinsonHowPeopleBuild2023 recently put it, the two models "describe different ways of translating sensory evidence into decision variables.".
 
-The central question addressed in this paper is this: Can the two canonical random-utility discrete-choice specifications — multinomial logit and multinomial probit — be derived from a shared generative mechanism? Can we find a deeper unifying principle? The surprising answer is yes - both models can be derived as limit cases of a single stochastic evidence accumulation mechanism. The key distinction between the models is not the form of the utility noise itself, but the stopping rule governing how stochastic evidence is accumulated before a choice is made.”
+The central question addressed in this paper is this: Can the two canonical random-utility discrete-choice specifications — multinomial logit and multinomial probit — be derived from a shared generative mechanism? Can we find a deeper unifying principle? The surprising answer is yes - both models can be derived as limit cases of a single stochastic evidence accumulation mechanism. The key distinction between the models is not the form of the utility noise itself, but the stopping rule governing how stochastic evidence is accumulated before a choice is made.
 
 ## Model overview
 
-I build on a **Poisson count race** (e.g., Pike, 1973; Townsend & Ashby, 1983; Smith & Van Zandt, 2000), wherein each alternative generates stochastic events via an independent Poisson process. A decision is made when one alternative reaches a cumulative count threshold $\theta$. The threshold $\theta$ thus controls how much stochastic evidence must be accumulated before commitment.
+Take a **Poisson count race** [@townsendStochasticModelingElementary1983; @smithTimedependentPoissonCounter2000a; @pikeResponseLatencyModels1973], wherein each alternative generates stochastic events via an independent Poisson process. A decision is made when one alternative reaches a cumulative count threshold $\theta$. The threshold $\theta$ thus controls how much stochastic evidence must be accumulated before commitment.
 
-To compare noise *shape* across $\theta$ independently of noise *scale*, I introduce a **temperature identification** that standardizes the stochastic utility component to unit variance for all $\theta$, with a separate parameter $\beta$ controlling the overall magnitude of stochasticity. With this normalization, we can establish three main results: 
+Without any additional modifications, such a model predicts increasingly deterministic responses, and in the limit as $\theta \to \infty$ it leads to choosing the option with the highest utility 100% of the time. To prevent this, and to compare noise *shape* across $\theta$ independently of noise *scale*, we must standardize the stochastic utility component to unit variance for all $\theta$, with a separate parameter $\beta$ controlling the overall magnitude of stochasticity. With this normalization, we can establish three main results: 
 
 1. At $\theta = 1$, this reduces exactly to the Multinomial Logit
 2. For any $\theta \ge 1$, the Poisson count race is isomorphic to a random utility model with log-Gamma noise, interpolating between Gumbel and Gaussian error distributions; 
-3. As $\theta \to \infty$ under temperature identification, the model converges to the Multinomial Probit. 
+3. As $\theta \to \infty$ the model converges to the Multinomial Probit. 
 
-From this perspective, the familiar distinction between logit and probit reflects differences in the stopping rule governing an evidence accumulation process, rather than fundamentally distinct assumptions about decision noise. Extreme-value behavior and Gaussian behavior arise naturally as endpoint regimes of the same stochastic system.
+From this perspective, logit and probit can be understood as members of a single parametric family of evidence accumulation models that differ in the accumulation stopping rule. Extreme-value noise and Gaussian noise arise as the two endpoint regimes of log-Gamma noise, which is the natural error distribution of Poisson count races. It is important to note, however, that this unification is algebraic and distributional rather than dynamical: the standartization that enables comparison across $\theta$ values compares different accumulation systems at matched discriminability, not a single system under threshold variation (see Section 5 for details).
 
-While Poisson counter models have a rich history in mathematical psychology—particularly as accounts of response time distributions under time-varying evidence rates (e.g., Pike, 1973; Townsend & Ashby, 1983; Smith & Van Zandt, 2000) - they have rarely been invoked to address the theoretical relationship between *static* discrete choice models. Smith and Van Zandt (2000) showed that Poisson races yield choice probabilities governed by the incomplete Beta function, but their analysis focused on relatively small integer thresholds $\theta \approx 5\text{–}10$ chosen to capture reaction-time skewness.
+While Poisson counter models have a rich history in mathematical psychology—particularly as accounts of response time distributions under time-varying evidence rates [@townsendStochasticModelingElementary1983; @smithTimedependentPoissonCounter2000a; @pikeResponseLatencyModels1973] - they have rarely been invoked to address the theoretical relationship between *static* discrete choice models. For example, Smith and Van Zandt (2000) showed that Poisson races yield choice probabilities governed by the incomplete Beta function when there are two options to choose from; but their analysis focused on relatively small integer thresholds $\theta \approx 5\text{–}10$ chosen to capture reaction-time skewness.
 
-The present work takes a different perspective. Rather than treating the threshold as a fixed descriptive parameter, we examine the asymptotic behavior of the Poisson count race as $\theta \to \infty$ under variance-preserving (temperature) identification. This shift in emphasis reveals that the Poisson race is not merely a model of latency, but a generative mechanism that continuously interpolates between the two canonical pillars of discrete choice: Multinomial Logit $\theta = 1$ and Multinomial Probit $\theta \to \infty$.
+The present work takes a different perspective. Rather than treating the threshold as a fixed descriptive parameter, I examine the asymptotic behavior of the Poisson count race as $\theta \to \infty$ under variance-preserving identification. This shift in emphasis reveals that the Poisson race is not merely a model of latency, but a generative mechanism that continuously interpolates between the two canonical pillars of discrete choice: Multinomial Logit $\theta = 1$ and Multinomial Probit $\theta \to \infty$.
 
 The remainder of the paper formalizes this framework, presents simulations illustrating the interpolation between regimes, and discusses implications for discrete choice modeling.
 
@@ -195,6 +232,8 @@ Here:
 - $\theta$ governs the shape of the noise (from skewed Gumbel to symmetric Gaussian).
 - $\beta$ governs the temperature (the magnitude of noise relative to utility).
 
+An important caveat accompanies this construction. In a random utility model, rescaling all utilities by a common positive constant does not change choice probabilities. Therefore, the temperature-identified model $U_i^{(\theta)} = v_i + \beta Z_i^{(\theta)}$ is observationally equivalent to a model with systematic utilities $v_i / \sigma_\theta$ and *unstandardized* log-Gamma noise $\epsilon_i^{(\theta)}$, where $\sigma_\theta = \sqrt{\psi_1(\theta)}$. This means that the temperature identification does not describe the behavior of a single accumulation system under threshold variation. For a fixed set of Poisson rates $\lambda_i$, increasing $\theta$ both reshapes the noise and reduces its variance; the variance reduction alone drives choice toward determinism regardless of shape. The temperature identification removes this confound by comparing across systems with different effective rate structures — specifically, the effective rates would need to scale as $\lambda_i^{1/\sigma_\theta}$ to maintain constant discriminability. The unification established here is therefore *distributional* — logit and probit belong to the same parametric family of log-Gamma random utility models — rather than *dynamical*. One cannot convert a logit-like decision process into a probit-like one merely by raising the decision threshold within a single system.
+
 # The Probit Limit ($\theta \to \infty$)
 
 This section establishes the asymptotic behavior of the temperature-identified model.
@@ -224,7 +263,7 @@ where $Z_i \stackrel{i.i.d.}{\sim} \mathcal{N}(0, 1)$.
 ::: {.callout-note icon="false"}
 ## Result 3 (Probit Limit)
 
-As $\theta \to \infty$, the Temperature-Identified Poisson race converges to the Independent Multinomial Probit model. The distinction between Logit and Probit is thus revealed to be a distinction in evidence thresholds: Logit is a low-threshold decision ($\theta=1$), while Probit is a high-threshold limit ($\theta \to \infty$).
+As $\theta \to \infty$, the Temperature-Identified Poisson race converges to the Independent Multinomial Probit model. Within the temperature-identified family, Logit corresponds to the $\theta=1$ member and Probit to the $\theta \to \infty$ limit. This characterizes the two models as occupying different positions within a single parametric family of log-Gamma random utility models, indexed by the accumulation threshold.
 :::
 
 # Simulation Studies: Binary Choice
@@ -250,11 +289,6 @@ Because logit and probit are themselves numerically close under variance matchin
 ```{r}
 #| label: fig-residuals
 #| fig-cap: "Residuals of Poisson count race choice probabilities relative to the Logit reference, plotted on a variance-matched axis. Each curve corresponds to a different accumulation threshold θ. At θ = 1 the model is exactly Logit (zero residual). As θ increases, the curves converge toward the Probit − Logit difference (black curve), confirming the theoretical bridge between the two models."
-
-source("R/race_functions.R")
-
-library(ggplot2)
-library(patchwork)
 
 s <- seq(-4, 4, length.out = 1200)
 thetas <- c(1, 2, 3, 5, 10, 20, 50, 200)
@@ -846,7 +880,7 @@ These multinomial simulations confirm and extend the binary-case results:
 
 # Discussion
 
-The present work develops a generative framework in which Multinomial Logit and Multinomial Probit arise as endpoint regimes of a single stochastic accumulation process. By introducing a Poisson count race and a temperature identification that separates noise scale from noise shape, this paper clarifies how extreme-value and Gaussian choice behavior emerge from different stopping rules applied to the same underlying mechanism. The goal is not to advocate replacing existing models, but to clarify their relationship: logit and probit correspond to distinct regimes of evidence accumulation, characterized by how much stochastic evidence is required before commitment.
+The present work develops a generative framework in which Multinomial Logit and Multinomial Probit arise as endpoint regimes of a single parametric family of stochastic accumulation models. By introducing a Poisson count race and a temperature identification that separates noise scale from noise shape, this paper clarifies how extreme-value and Gaussian choice behavior emerge as members of the log-Gamma random utility family, indexed by the accumulation threshold $\theta$. As discussed in Section 5, this bridge is distributional rather than dynamical: the temperature identification compares different accumulation systems at matched discriminability, rather than describing the behavior of a single system under threshold manipulation. The goal is not to advocate replacing existing models, but to clarify their relationship: logit and probit represent different positions within a continuum of log-Gamma noise shapes, with the accumulation threshold governing the transition between them.
 
 The multinomial simulations demonstrate that this unification is not merely a theoretical curiosity. Thresholded accumulation induces systematic, graded violations of IIA that converge toward the dependence structure characteristic of multinomial probit. This dependence emerges endogenously from the accumulation and stopping rule, rather than being imposed by construction. The parameter invariance results further connect the framework to recent empirical findings [@robinsonHowPeopleBuild2023], providing a process-level account of why Gaussian-based parameters exhibit greater stability across changes in set size.
 
@@ -874,4 +908,4 @@ Finally, the framework naturally invites comparison with other random utility sp
 
 ## Concluding remarks
 
-By grounding discrete choice models in a common stochastic accumulation process, the Poisson count race reframes a long-standing modeling distinction. Logit and probit emerge not as competing assumptions about utility noise, but as endpoint regimes corresponding to different stopping rules applied to the same underlying mechanism. This unification clarifies their conceptual relationship and provides a principled basis for comparison, illustrating how process-level reasoning can illuminate the structure of static choice models.
+By grounding discrete choice models in a common stochastic accumulation process, the Poisson count race reframes a long-standing modeling distinction. Logit and probit emerge not as competing assumptions about utility noise, but as members of a single parametric family — the log-Gamma random utility models — indexed by the accumulation threshold $\theta$. This unification is algebraic and distributional: it reveals that the two canonical specifications occupy endpoint positions within a continuous family of noise shapes, rather than representing fundamentally distinct generating mechanisms. At the same time, the unification does not imply that a single decision system can transition between regimes by adjusting its threshold alone, since the temperature identification that enables comparison across $\theta$ values entails different effective rate structures. The framework thus clarifies the conceptual relationship between logit and probit and provides a principled basis for comparison, illustrating how process-level reasoning can illuminate the structure of static choice models.

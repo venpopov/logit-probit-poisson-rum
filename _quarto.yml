@@ -9,12 +9,14 @@ manuscript:
   article: index.qmd
 
 bibliography: references.bib
+csl: apa.csl
 
 format:
   html: default
 
 execute:
   freeze: auto
+  execute-dir: project
 
 
 
