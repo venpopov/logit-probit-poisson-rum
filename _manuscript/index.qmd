@@ -101,9 +101,9 @@ The remainder of the paper formalizes this framework, presents simulations illus
 
 # The Generative Model: A Poisson Count Race
 
-Let the accumulation of evidence or preference for each alternative $i$ be modeled by independent Poisson processes, denoted $N_i(t)$, with rate parameters $\lambda_i > 0$. Here $N_i(t)$ represents cumulative count for alternative $i$ at time $t$.
+Let the accumulation of evidence or preference for each alternative $i$ be modeled by independent Poisson count processes, denoted $N_i(t)$, with rate parameters $\lambda_i > 0$. Here $N_i(t)$ represents cumulative count for alternative $i$ at time $t$.
 
-Then, define a **Count Race** characterized by an integer threshold $\theta \ge 1$. The process terminates as soon as any single alternative accumulates $\theta$ events.
+Then, define a **count race** characterized by an integer threshold $\theta \ge 1$. The process terminates as soon as any single alternative accumulates $\theta$ events.
 
 **Definition 1 (Stopping Time).** The stopping time for the system is the first time any process hits the threshold:
 
@@ -151,7 +151,7 @@ $$
 C = \arg \min_{i} \left( \frac{G_i}{\lambda_i} \right)
 $$
 
-Applying the natural logarithm, a monotonic transformation, reverses the optimization direction from minimization to maximization:
+Applying the natural logarithm and taking the negative, a monotonic transformation, reverses the optimization direction from minimization to maximization:
 
 $$
 \begin{aligned} C &= \arg \min_{i} (\log G_i - \log \lambda_i) \\ &= \arg \max_{i} (\log \lambda_i - \log G_i) \end{aligned}
@@ -173,7 +173,7 @@ Thus, the Poisson count race is isomorphic to a Random Utility Model characteriz
 ::: {.callout-note icon="false"}
 ## Result 1 (Log-Gamma Random Utility Family)
 
-For any integer threshold $\theta \ge 1$, the Poisson count race induces a random utility model $U_i^{(\theta)} = \log \lambda_i - \log G_i$ with i.i.d. log-Gamma($\theta$) noise. This family interpolates between Gumbel noise ($\theta = 1$) and, under temperature identification, Gaussian noise ($\theta \to \infty$).
+For any integer threshold $\theta \ge 1$, the Poisson count race induces a random utility model $U_i^{(\theta)} = \log \lambda_i - \log G_i$ with i.i.d. log-Gamma($\theta$) noise.
 :::
 
 # The Logit Boundary ($\theta = 1$)
@@ -199,10 +199,10 @@ $$
 ::: {.callout-note icon="false"}
 ## Result 2 (Logit Boundary)
 
-The Poisson count race with threshold $\theta=1$ recovers the Multinomial Logit model exactly. The accumulation of a single unit of evidence corresponds to the Luce Choice Rule (Softmax). This is a classic, well-known derivation.
+The Poisson count race with threshold $\theta=1$ recovers the Multinomial Logit model exactly, with deterministic utility components equal to the log rate of their poisson counterparts. The accumulation of a single unit of evidence corresponds to the Luce Choice Rule (Softmax). This is a classic, well-known derivation.
 :::
 
-# Temperature Identification
+# Variance normalization
 
 For thresholds $\theta > 1$, the error distribution deviates from the Gumbel form. More critically, as $\theta$ increases, the variance of the error term diminishes. Specifically, for $\epsilon^{(\theta)} = -\log G$ where $G \sim \text{Gamma}(\theta, 1)$, the moments are:
 
@@ -214,13 +214,13 @@ where $\psi(\cdot)$ is the digamma function and $\psi_1(\cdot)$ is the trigamma 
 
 As $\theta \to \infty$, the variance $\psi_1(\theta) \approx 1/\theta \to 0$. Without intervention, the model would converge to a deterministic choice rule (argmax of systematic utilities) simply because the noise vanishes. To facilitate a meaningful comparison of error shapes across varying $\theta$, we must enforce a consistent scale.
 
-We term this process Temperature Identification and define the standardized noise term $Z_i^{(\theta)}$ to have zero mean and unit variance for all $\theta$
+Define the standardized noise term $Z_i^{(\theta)}$ to have zero mean and unit variance for all $\theta$:
 
 $$
 Z_i^{(\theta)} := \frac{\epsilon_i^{(\theta)} - \mu_\theta}{\sigma_\theta} = \frac{-\log G_i + \psi(\theta)}{\sqrt{\psi_1(\theta)}}
 $$
 
-This leads to a **Temperature-Identified Family** of utility models:
+This leads to family of utility models with matched discriminability:
 
 $$
 U_i^{(\theta)} = v_i + \beta Z_i^{(\theta)}
@@ -232,7 +232,11 @@ Here:
 - $\theta$ governs the shape of the noise (from skewed Gumbel to symmetric Gaussian).
 - $\beta$ governs the temperature (the magnitude of noise relative to utility).
 
-An important caveat accompanies this construction. In a random utility model, rescaling all utilities by a common positive constant does not change choice probabilities. Therefore, the temperature-identified model $U_i^{(\theta)} = v_i + \beta Z_i^{(\theta)}$ is observationally equivalent to a model with systematic utilities $v_i / \sigma_\theta$ and *unstandardized* log-Gamma noise $\epsilon_i^{(\theta)}$, where $\sigma_\theta = \sqrt{\psi_1(\theta)}$. This means that the temperature identification does not describe the behavior of a single accumulation system under threshold variation. For a fixed set of Poisson rates $\lambda_i$, increasing $\theta$ both reshapes the noise and reduces its variance; the variance reduction alone drives choice toward determinism regardless of shape. The temperature identification removes this confound by comparing across systems with different effective rate structures — specifically, the effective rates would need to scale as $\lambda_i^{1/\sigma_\theta}$ to maintain constant discriminability. The unification established here is therefore *distributional* — logit and probit belong to the same parametric family of log-Gamma random utility models — rather than *dynamical*. One cannot convert a logit-like decision process into a probit-like one merely by raising the decision threshold within a single system.
+An important caveat accompanies this construction. In a random utility model, rescaling all utilities by a common positive constant does not change choice probabilities. If we multiply both terms by $\sigma_\theta = \sqrt{\psi_1(\theta)}$, we would not change the predicted probabilities. Therefore, the variance-normalized model $U_i^{(\theta)} = v_i + \beta Z_i^{(\theta)}$ is observationally equivalent to a model with systematic utilities $v_i \sigma_\theta$ and *unstandardized* log-Gamma noise $\epsilon_i^{(\theta)}$. 
+
+This has an important theoretical consequence: the standardized distributions cannot describe the behavior of a single accumulation system under threshold variation. For a fixed set of Poisson rates $\lambda_i$, increasing $\theta$ both reshapes the noise and reduces its variance; the variance reduction alone drives choice toward determinism regardless of shape. The standardization removes this confound by comparing across systems with different effective rate structures — specifically, the effective rates would need to scale as $\lambda_i^{1/\sigma_\theta}$ to maintain constant discriminability. However, it is not psychologically plausible that a decision-maker can affect the utilities / poisson rates in exactly the right way if they choose a higher, more conservative threshold. Simply put - a single decision-making system cannot wait its way from a logit to a probit model while keeping discriminability fixed.
+
+The unification established here is therefore *distributional* — logit and probit belong to the same parametric family of log-Gamma random utility models — rather than *dynamical*. One cannot convert a logit-like decision process into a probit-like one merely by raising the decision threshold within a single system. Rather, different regimes likely describe the functioning of different decision-making systems.
 
 # The Probit Limit ($\theta \to \infty$)
 

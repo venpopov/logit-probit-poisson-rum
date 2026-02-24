@@ -29,6 +29,7 @@ library(ggplot2)
 library(ggdist)
 library(distributional)
 library(patchwork)
+library(actuar)
 ```
 
 # Introduction
