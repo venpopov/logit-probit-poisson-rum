@@ -7,12 +7,19 @@ project:
 
 manuscript:
   article: index.qmd
+  code-links:
+    - text: Simulation functions
+      icon: file-code
+      href: R/race_functions.R
+    - repo
 
 bibliography: references.bib
 csl: apa.csl
 
 format:
   html: default
+  apaquarto-pdf:
+    documentmode: man
 
 execute:
   freeze: auto

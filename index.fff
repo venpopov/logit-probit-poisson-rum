@@ -1,0 +1,180 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-rum-overview}The two canonical random utility
+models. Left panels show the noise distributions for each alternative,
+with a single random draw from each (the winning draw is highlighted).
+Right panels show the corresponding choice probability formulas. Top
+row: Gumbel (Type I Extreme Value) noise yields the Multinomial Logit
+(Softmax). Bottom row: Gaussian noise yields the Multinomial Probit.}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-pdf/fig-rum-overview-1.pdf}}
+
+}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-residuals}Residuals of Poisson count race choice
+probabilities relative to the Logit reference, plotted on a
+variance-matched axis. Each curve corresponds to a different
+accumulation threshold θ. At θ = 1 the model is exactly Logit (zero
+residual). As θ increases, the curves converge toward the Probit − Logit
+difference (black curve), confirming the theoretical bridge between the
+two models.}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-pdf/fig-residuals-1.pdf}}
+
+}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-tv-distance}Total variation distance between Poisson
+count race choice probabilities and the Logit (blue) and Probit (red)
+references, as a function of threshold θ, for different numbers of
+alternatives K.}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-pdf/fig-tv-distance-1.pdf}}
+
+}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-prob-vectors}Choice probabilities for each of five
+alternatives as a function of threshold θ. Dashed lines: Logit
+reference; dotted lines: Probit reference.}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-pdf/fig-prob-vectors-1.pdf}}
+
+}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-set-size}Probability of choosing a target
+alternative (v = 1) against K − 1 equal competitors (v = 0) as a
+function of set size K. MNL (dashed blue) and MNP (dashed red)
+references are shown.}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-pdf/fig-set-size-1.pdf}}
+
+}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-iia}Test of IIA. Left: the ratio P(Alt 1)/P(Alt 2)
+in the full set \{1, 2, 3\} (solid) and reduced set \{1, 2\} (dashed).
+Right: percentage change in the ratio when alternative 3 is removed.}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-pdf/fig-iia-1.pdf}}
+
+}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-parameter-recovery}Recovered temperature parameters
+under logit (left) and probit (right) model assumptions as a function of
+set size K and accumulation threshold θ.}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-pdf/fig-parameter-recovery-1.pdf}}
+
+}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-noise-densities}Standardised noise densities for
+selected values of θ. As θ increases, the density converges to the
+standard normal (black dashed).}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-pdf/fig-noise-densities-1.pdf}}
+
+}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-skew-kurtosis}Skewness and excess kurtosis of the
+standardised log-Gamma noise as a function of θ. Both moments converge
+to zero (the Gaussian values) as θ increases, with skewness decaying as
+O(θ\^{}\{-1/2\}) and excess kurtosis as O(θ\^{}\{-1\}). These moment
+trajectories fully characterise the transition from Gumbel to Gaussian
+noise shape.}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-pdf/fig-skew-kurtosis-1.pdf}}
+
+}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-robustness}Total variation distance from Probit as a
+function of θ for K = 5 alternatives under four utility structures:
+uniform, dominant, linear, and clustered.}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-pdf/fig-robustness-1.pdf}}
+
+}
+
+\end{figure*}
