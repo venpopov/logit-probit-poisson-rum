@@ -1,9 +1,12 @@
 ---
 title: A Poisson Count Race as a Generative Bridge Between Logit and Probit Choice
-authors:
+shorttitle: Poisson count race unifies logit and probit
+author:
   - name: Vencislav Popov
     affiliation: Department of Psychology, University of Zurich
     corresponding: true
+    email: vencislav.popov@gmail.com
+    orcid: 0000-0002-8073-4199
 abstract: |
   This study unifies the two canonical discrete choice specifications - multinomial logit and multinomial probit - within a single count process. The model uses a Poisson count process race, wherein $K$ alternatives generate events according to independent Poisson processes. A choice is determined when an alternative reaches a cumulative count threshold $\theta$. At the single-event threshold, $\theta=1$, the model yields the Multinomial Logit (Luce choice rule). By normalizing the utility noise to maintain a constant variance, I show that as $\theta \to \infty$, the model converges to the Multinomial Probit. This formulation provides a parametric bridge in which $\theta$ governs the shape of the error distribution and a separate parameter, $\beta$, modulates the variance, while the systematic utilities $v_i$ are shared across all regimes. The generalized model uses a single stochastic accumulation mechanism: both regimes belong to the log-Gamma random utility family, with $\theta$ governing the transition between Gumbel and Gaussian noise shapes. The unification is distributional rather than dynamical: changes in $\theta$ do not represent a single decision-making system adjusting its threshold in real time, but rather compare different accumulation regimes at matched discriminability.
 number-sections: true
@@ -14,6 +17,8 @@ keywords:
   - multinomial probit
   - Poisson process
   - evidence accumulation
+floatsintext: true
+a4paper: true
 execute: 
   cache: true
 draft:
@@ -978,3 +983,10 @@ Finally, the framework naturally invites comparison with other random utility sp
 ## Concluding remarks
 
 By grounding discrete choice models in a common stochastic accumulation process, the Poisson count race reframes a long-standing modeling distinction. Logit and probit emerge not as competing assumptions about utility noise, but as members of a single parametric family — the log-Gamma random utility models — indexed by the accumulation threshold $\theta$. This unification is algebraic and distributional: it reveals that the two canonical specifications occupy endpoint positions within a continuous family of noise shapes, rather than representing fundamentally distinct generating mechanisms. At the same time, the unification does not imply that a single decision system can transition between regimes by adjusting its threshold alone, since the variance standardization that enables comparison across $\theta$ values entails different effective rate structures. The framework thus clarifies the conceptual relationship between logit and probit and provides a principled basis for comparison, illustrating how process-level reasoning can illuminate the structure of static choice models.
+
+# References
+
+<!-- References will auto-populate in the refs div below -->
+
+::: {#refs}
+:::
