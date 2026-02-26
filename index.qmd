@@ -37,8 +37,6 @@ library(patchwork)
 library(actuar)
 ```
 
-# Introduction
-
 Discrete choice models based on Random Utility (RU) theory [@mcfaddenConditionalLogitAnalysis1974] form a central pillar of mathematical psychology, econometrics, and cognitive science. In these models, each alternative in a choice set elicits a *latent* scalar quantity - often interpreted as strength, utility, or evidence - and the observed choices arise from a comparison of these latent quantities under stochastic variability. The general setup is surprisingly simple. Consider a decision-maker facing a set of $K \ge 2$ mutually exclusive alternatives. The utility associated with alternative $i$ can be decomposed into a systematic component, $v_i$, and a stochastic component, $\epsilon_i$:
 
 $$
@@ -96,7 +94,7 @@ Without any additional modifications, such a model predicts increasingly determi
 2. For any $\theta \ge 1$, the Poisson count race is isomorphic to a random utility model with log-Gamma noise, interpolating between Gumbel and Gaussian error distributions; 
 3. As $\theta \to \infty$ the model converges to the Multinomial Probit. 
 
-From this perspective, logit and probit can be understood as members of a single parametric family of evidence accumulation models that differ in the accumulation stopping rule. Extreme-value noise and Gaussian noise arise as the two endpoint regimes of log-Gamma noise, which is the natural error distribution of Poisson count races. It is important to note, however, that this unification is algebraic and distributional rather than dynamical: the standartization that enables comparison across $\theta$ values compares different accumulation systems at matched discriminability, not a single system under threshold variation (see Section 5 for details).
+From this perspective, logit and probit can be understood as members of a single parametric family of evidence accumulation models that differ in the accumulation stopping rule. Extreme-value noise and Gaussian noise arise as the two endpoint regimes of log-Gamma noise, which is the natural error distribution of Poisson count races. It is important to note, however, that this unification is algebraic and distributional rather than dynamical: the standardization that enables comparison across $\theta$ values compares different accumulation systems at matched discriminability, not a single system under threshold variation (see @sec-variance-normalization for details).
 
 While Poisson counter models have a rich history in mathematical psychology—particularly as accounts of response time distributions under time-varying evidence rates [@townsendStochasticModelingElementary1983; @smithTimedependentPoissonCounter2000a; @pikeResponseLatencyModels1973] - they have rarely been invoked to address the theoretical relationship between *static* discrete choice models. For example, Smith and Van Zandt (2000) showed that Poisson races yield choice probabilities governed by the incomplete Beta function when there are two options to choose from; but their analysis focused on relatively small integer thresholds $\theta \approx 5\text{–}10$ chosen to capture reaction-time skewness.
 
@@ -105,7 +103,7 @@ The present work takes a different perspective. Rather than treating the thresho
 The remainder of the paper formalizes this framework, presents simulations illustrating the interpolation between regimes, and discusses implications for discrete choice modeling.
 
 
-# The Generative Model: A Poisson Count Race
+# The Generative Model: A Poisson Count Race {#sec-generative-model}
 
 Let the accumulation of evidence or preference for each alternative $i$ be modeled by independent Poisson count processes, denoted $N_i(t)$, with rate parameters $\lambda_i > 0$. Here $N_i(t)$ represents cumulative count for alternative $i$ at time $t$.
 
@@ -182,7 +180,7 @@ Thus, the Poisson count race is isomorphic to a Random Utility Model characteriz
 For any integer threshold $\theta \ge 1$, the Poisson count race induces a random utility model $U_i^{(\theta)} = \log \lambda_i - \log G_i$ with i.i.d. log-Gamma($\theta$) noise.
 :::
 
-# The Logit Boundary ($\theta = 1$)
+# The Logit Boundary ($\theta = 1$) {#sec-logit-boundary}
 
 In the specific instance where the threshold is a single event ($\theta = 1$), the waiting time distribution simplifies to the Exponential distribution:
 
@@ -208,7 +206,7 @@ $$
 The Poisson count race with threshold $\theta=1$ recovers the Multinomial Logit model exactly, with deterministic utility components equal to the log rate of their poisson counterparts. The accumulation of a single unit of evidence corresponds to the Luce Choice Rule (Softmax). This is a classic, well-known derivation.
 :::
 
-# Variance normalization
+# Variance normalization {#sec-variance-normalization}
 
 For thresholds $\theta > 1$, the error distribution deviates from the Gumbel form. More critically, as $\theta$ increases, the variance of the error term diminishes. Specifically, for $\epsilon^{(\theta)} = -\log G$ where $G \sim \text{Gamma}(\theta, 1)$, the moments are:
 
@@ -244,7 +242,7 @@ This has an important theoretical consequence: the standardized distributions ca
 
 The unification established here is therefore *distributional* — logit and probit belong to the same parametric family of log-Gamma random utility models — rather than *dynamical*. One cannot convert a logit-like decision process into a probit-like one merely by raising the decision threshold within a single system. Rather, different regimes likely describe the functioning of different decision-making systems.
 
-# The Probit Limit ($\theta \to \infty$)
+# The Probit Limit ($\theta \to \infty$) {#sec-probit-limit}
 
 This section establishes the asymptotic behavior of the variance-standardized model.
 
@@ -276,7 +274,7 @@ where $Z_i \stackrel{i.i.d.}{\sim} \mathcal{N}(0, 1)$.
 As $\theta \to \infty$, the Variance-Standardized Poisson race converges to the Independent Multinomial Probit model. Within the variance-standardized family, Logit corresponds to the $\theta=1$ member and Probit to the $\theta \to \infty$ limit. This characterizes the two models as occupying different positions within a single parametric family of log-Gamma random utility models, indexed by the accumulation threshold.
 :::
 
-# Simulation Studies: Binary Choice
+# Simulation Studies: Binary Choice {#sec-binary-simulations}
 
 To illustrate how the Poisson count race family interpolates between Logit and Probit, I conducted a simulation study in the binary choice setting ($K=2$). This setting admits closed-form choice probabilities and allows direct visual comparison with both classical models.
 
@@ -290,7 +288,7 @@ where $I_p(a, b)$ is the regularized incomplete Beta function and $\sigma(x) = (
 
 When choice probabilities are plotted directly as a function of $x$ for increasing $\theta$, the choice function becomes increasingly steep and converges to a step function at $x = 0$, reflecting deterministic selection of the alternative with the larger rate. This confirms that without variance standardization, increasing the count threshold simply reduces stochasticity rather than inducing Gaussian behavior.
 
-To compare noise *shape* independently of noise *scale*, I adopted the variance standardization introduced in Section 5. For binary choice, the variance of the utility noise difference is $\text{Var}(\epsilon_1^{(\theta)} - \epsilon_2^{(\theta)}) = 2\psi_1(\theta)$. I therefore define the standardized signal $s = x / \sqrt{2\psi_1(\theta)}$. On this variance-matched axis, the Logit reference ($\theta = 1$) uses $\text{sd}_{\text{diff}} = \pi/\sqrt{3}$ (the standard deviation of the difference of two independent Gumbel variates), and the Probit reference is simply $\Phi(s)$.
+To compare noise *shape* independently of noise *scale*, I adopted the variance standardization introduced in @sec-variance-normalization. For binary choice, the variance of the utility noise difference is $\text{Var}(\epsilon_1^{(\theta)} - \epsilon_2^{(\theta)}) = 2\psi_1(\theta)$. I therefore define the standardized signal $s = x / \sqrt{2\psi_1(\theta)}$. On this variance-matched axis, the Logit reference ($\theta = 1$) uses $\text{sd}_{\text{diff}} = \pi/\sqrt{3}$ (the standard deviation of the difference of two independent Gumbel variates), and the Probit reference is simply $\Phi(s)$.
 
 For the multinomial simulations, the same principle applies. The logit reference uses an effective inverse temperature of $\pi / (\beta\sqrt{6})$, which ensures the Gumbel noise has standard deviation matching $\beta$ under the unit-variance convention. The probit reference uses noise scale $\beta$ directly. All simulations use $\beta = 1$ unless otherwise noted. Under this normalization, the $\theta = 1$ Poisson race coincides exactly with the variance-matched logit curve, while increasing $\theta$ yields choice functions that converge uniformly to the probit curve.
 
@@ -340,7 +338,7 @@ ggplot(df, aes(x = s, y = residual, color = model, linewidth = model)) +
   theme(legend.position = "right")
 ```
 
-# Simulation Studies: Multinomial K-alternative Choice
+# Simulation Studies: Multinomial K-alternative Choice {#sec-multinomial-simulations}
 
 The binary simulation demonstrates that the variance-standardized Poisson count race interpolates smoothly between Logit ($\theta = 1$) and Probit ($\theta \to \infty$) in the two-alternative case. Here I extend this analysis to the multinomial setting ($K > 2$), where the differences between logit and probit become richer and more consequential.
 
@@ -888,7 +886,7 @@ These multinomial simulations confirm and extend the binary-case results:
 
 6.  **Noise shape transition**: The underlying mechanism is a smooth transition in the shape of the standardised noise distribution, from the skewed Gumbel ($\theta = 1$) to the symmetric Gaussian ($\theta \to \infty$). The skewness and kurtosis decay at known rates, providing analytic control over the approximation quality.
 
-# Extending the Race Model to Correlated Errors
+# Extending the Race Model to Correlated Errors {#sec-correlated-errors}
 
 The core model described thus far restricts the underlying count processes to be strictly independent, yielding the Independent Multinomial Probit in the asymptotic limit. However, the primary theoretical appeal of probit models lies in their ability to accommodate correlated error structures, thereby capturing similarity effects and systematic violations of the Independence of Irrelevant Alternatives (IIA). In this section, I demonstrate that the Poisson count race can be naturally extended to generate the full Correlated Multinomial Probit by introducing shared evidence generators. This provides a mechanistic, process-level account for how covariance structures emerge in static choice models.
 
@@ -914,7 +912,7 @@ To find the asymptotic joint distribution of the choice model, we apply the Mult
 
 Applying the utility transformation $U_i^{(\theta)} = \log \Lambda_i - \log G_i$, where $G_i = \Lambda_i T_i^{(\theta)}$ is marginally $\text{Gamma}(\theta, 1)$ but now correlated across alternatives, and the Multivariate Delta Method (with $g(x) = -\log x$), the unstandardized random utility errors converge to a Multivariate Normal distribution whose covariance scales as $\psi_1(\theta) \rho_{ij} \approx (1/\theta)\rho_{ij}$.
 
-When we apply the variance normalization from Section 4 to enforce matched discriminability, we define the standardized noise $Z_i^{(\theta)} = (\epsilon_i^{(\theta)} - \mu_\theta) / \sigma_\theta$. Because $\sigma_\theta = \sqrt{\psi_1(\theta)} \approx 1/\sqrt{\theta}$ for large $\theta$, dividing the covariance by $\sigma_\theta^2 = \psi_1(\theta)$ exactly recovers $\rho_{ij}$. The standardized noise vector $\mathbf{Z}^{(\theta)}$ thus converges in distribution to a multivariate standard normal with the correlation matrix of the underlying counting processes:
+When we apply the variance normalization from @sec-variance-normalization to enforce matched discriminability, we define the standardized noise $Z_i^{(\theta)} = (\epsilon_i^{(\theta)} - \mu_\theta) / \sigma_\theta$. Because $\sigma_\theta = \sqrt{\psi_1(\theta)} \approx 1/\sqrt{\theta}$ for large $\theta$, dividing the covariance by $\sigma_\theta^2 = \psi_1(\theta)$ exactly recovers $\rho_{ij}$. The standardized noise vector $\mathbf{Z}^{(\theta)}$ thus converges in distribution to a multivariate standard normal with the correlation matrix of the underlying counting processes:
 
 $$\mathbf{Z}^{(\theta)} \xrightarrow{d} \mathcal{N}(\mathbf{0}, \mathbf{R})$$
 
@@ -922,7 +920,7 @@ where $\mathbf{R}$ has off-diagonal elements $\rho_{ij}$. Consequently, the rand
 
 ## Variance Normalization and Parameter Recovery
 
-While the asymptotic proof establishes the theoretical limit, analyzing the behavior of the shared-feature model under the variance normalization introduced in Section 4 reveals critical boundary conditions of evidence accumulation.
+While the asymptotic proof establishes the theoretical limit, analyzing the behavior of the shared-feature model under the variance normalization introduced in @sec-variance-normalization reveals critical boundary conditions of evidence accumulation.
 
 To maintain matched discriminability across varying thresholds $\theta$, the systematic utilities $v_i$ must remain constant while the noise is scaled. Because the systematic utility in the unstandardized race is $\log(\Lambda_i)$, the _effective total rates_ must scale with $\sigma_\theta = \sqrt{\psi_1(\theta)}$:
 
@@ -952,9 +950,9 @@ At $\theta=1$, a shared event $Y_S(t)$ reaching the single-count threshold cause
 
 Furthermore, because incorporating a target correlation $\rho$ requires dynamically shifting probability mass into the shared generator $\lambda_{12}^*$, the first two moments (variance and covariance) of the utility distribution are fixed by the target covariance structure across all $\theta$. Consequently, the choice probabilities exhibit Probit-like substitution patterns at all thresholds, not only in the asymptotic limit. Thus, while independent accumulators trace the transition of noise _shape_ from Gumbel to Gaussian, shared accumulators sacrifice this interpolation to map the generative model onto the exact covariance structures required for general discrete choice applications.
 
-# Discussion
+# Discussion {#sec-discussion}
 
-The present work develops a generative framework in which Multinomial Logit and Multinomial Probit arise as endpoint regimes of a single parametric family of stochastic accumulation models. By introducing a Poisson count race and a variance standardization that separates noise scale from noise shape, this paper clarifies how extreme-value and Gaussian choice behavior emerge as members of the log-Gamma random utility family, indexed by the accumulation threshold $\theta$. As discussed in Section 5, this bridge is distributional rather than dynamical: the variance standardization compares different accumulation systems at matched discriminability, rather than describing the behavior of a single system under threshold manipulation. The goal is not to advocate replacing existing models, but to clarify their relationship: logit and probit represent different positions within a continuum of log-Gamma noise shapes, with the accumulation threshold governing the transition between them.
+The present work develops a generative framework in which Multinomial Logit and Multinomial Probit arise as endpoint regimes of a single parametric family of stochastic accumulation models. By introducing a Poisson count race and a variance standardization that separates noise scale from noise shape, this paper clarifies how extreme-value and Gaussian choice behavior emerge as members of the log-Gamma random utility family, indexed by the accumulation threshold $\theta$. As discussed in @sec-variance-normalization, this bridge is distributional rather than dynamical: the variance standardization compares different accumulation systems at matched discriminability, rather than describing the behavior of a single system under threshold manipulation. The goal is not to advocate replacing existing models, but to clarify their relationship: logit and probit represent different positions within a continuum of log-Gamma noise shapes, with the accumulation threshold governing the transition between them.
 
 The multinomial simulations demonstrate that this unification is not merely a theoretical curiosity. Thresholded accumulation induces systematic, graded violations of IIA that converge toward the dependence structure characteristic of multinomial probit. This dependence emerges endogenously from the accumulation and stopping rule, rather than being imposed by construction. The parameter invariance results further connect the framework to recent empirical findings [@robinsonHowPeopleBuild2023], providing a process-level account of why Gaussian-based parameters exhibit greater stability across changes in set size.
 
