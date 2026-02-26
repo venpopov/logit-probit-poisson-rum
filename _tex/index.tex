@@ -321,12 +321,6 @@ Popov, Email: \href{mailto:vencislav.popov@gmail.com}{vencislav.popov@gmail.com}
 
 
 
-\textsubscript{Source:
-\href{https://venpopov.github.io/logit-probit-poisson-rum/index.qmd.html}{Article
-Notebook}}
-
-\section{Introduction}\label{introduction}
-
 Discrete choice models based on Random Utility (RU) theory
 (\citeproc{ref-mcfaddenConditionalLogitAnalysis1974}{McFadden, 1974})
 form a central pillar of mathematical psychology, econometrics, and
@@ -408,10 +402,6 @@ row: Gumbel (Type I Extreme Value) noise yields the Multinomial Logit
 
 \end{figure}%
 
-\textsubscript{Source:
-\href{https://venpopov.github.io/logit-probit-poisson-rum/index.qmd.html}{Article
-Notebook}}
-
 The random utility framework thus unifies axiomatic choice models
 (\citeproc{ref-luceIndividualChoiceBehavior1959}{Luce, 1959}) and
 measurement detection-based models
@@ -474,10 +464,10 @@ in the accumulation stopping rule. Extreme-value noise and Gaussian
 noise arise as the two endpoint regimes of log-Gamma noise, which is the
 natural error distribution of Poisson count races. It is important to
 note, however, that this unification is algebraic and distributional
-rather than dynamical: the standartization that enables comparison
+rather than dynamical: the standardization that enables comparison
 across \(\theta\) values compares different accumulation systems at
 matched discriminability, not a single system under threshold variation
-(see Section 5 for details).
+(see Section~\ref{sec-variance-normalization} for details).
 
 While Poisson counter models have a rich history in mathematical
 psychology---particularly as accounts of response time distributions
@@ -507,7 +497,7 @@ simulations illustrating the interpolation between regimes, and
 discusses implications for discrete choice modeling.
 
 \section{The Generative Model: A Poisson Count
-Race}\label{the-generative-model-a-poisson-count-race}
+Race}\label{sec-generative-model}
 
 Let the accumulation of evidence or preference for each alternative
 \(i\) be modeled by independent Poisson count processes, denoted
@@ -606,7 +596,7 @@ where:
 Thus, the Poisson count race is isomorphic to a Random Utility Model
 characterized by Log-Gamma noise.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toprule=.15mm, leftrule=.75mm, titlerule=0mm, coltitle=black, breakable, colback=white, rightrule=.15mm, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, bottomtitle=1mm, bottomrule=.15mm, title={Result 1 (Log-Gamma Random Utility Family)}, left=2mm, arc=.35mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, opacityback=0, leftrule=.75mm, bottomtitle=1mm, breakable, toprule=.15mm, rightrule=.15mm, opacitybacktitle=0.6, bottomrule=.15mm, left=2mm, title={Result 1 (Log-Gamma Random Utility Family)}, arc=.35mm, coltitle=black]
 
 For any integer threshold \(\theta \ge 1\), the Poisson count race
 induces a random utility model
@@ -616,7 +606,7 @@ log-Gamma(\(\theta\)) noise.
 \end{tcolorbox}
 
 \section{\texorpdfstring{The Logit Boundary
-(\(\theta = 1\))}{The Logit Boundary (\textbackslash theta = 1)}}\label{the-logit-boundary-theta-1}
+(\(\theta = 1\))}{The Logit Boundary (\textbackslash theta = 1)}}\label{sec-logit-boundary}
 
 In the specific instance where the threshold is a single event
 (\(\theta = 1\)), the waiting time distribution simplifies to the
@@ -641,7 +631,7 @@ formula:
 \Pr(C=i) = \frac{\exp(v_i)}{\sum_{j=1}^K \exp(v_j)} = \frac{\lambda_i}{\sum_{j=1}^K \lambda_j}
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toprule=.15mm, leftrule=.75mm, titlerule=0mm, coltitle=black, breakable, colback=white, rightrule=.15mm, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, bottomtitle=1mm, bottomrule=.15mm, title={Result 2 (Logit Boundary)}, left=2mm, arc=.35mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, opacityback=0, leftrule=.75mm, bottomtitle=1mm, breakable, toprule=.15mm, rightrule=.15mm, opacitybacktitle=0.6, bottomrule=.15mm, left=2mm, title={Result 2 (Logit Boundary)}, arc=.35mm, coltitle=black]
 
 The Poisson count race with threshold \(\theta=1\) recovers the
 Multinomial Logit model exactly, with deterministic utility components
@@ -651,7 +641,7 @@ This is a classic, well-known derivation.
 
 \end{tcolorbox}
 
-\section{Variance normalization}\label{variance-normalization}
+\section{Variance normalization}\label{sec-variance-normalization}
 
 For thresholds \(\theta > 1\), the error distribution deviates from the
 Gumbel form. More critically, as \(\theta\) increases, the variance of
@@ -733,7 +723,7 @@ regimes likely describe the functioning of different decision-making
 systems.
 
 \section{\texorpdfstring{The Probit Limit
-(\(\theta \to \infty\))}{The Probit Limit (\textbackslash theta \textbackslash to \textbackslash infty)}}\label{the-probit-limit-theta-to-infty}
+(\(\theta \to \infty\))}{The Probit Limit (\textbackslash theta \textbackslash to \textbackslash infty)}}\label{sec-probit-limit}
 
 This section establishes the asymptotic behavior of the
 variance-standardized model.
@@ -770,7 +760,7 @@ Consequently, the vector of random utilities converges in distribution:
 
 where \(Z_i \stackrel{i.i.d.}{\sim} \mathcal{N}(0, 1)\).
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toprule=.15mm, leftrule=.75mm, titlerule=0mm, coltitle=black, breakable, colback=white, rightrule=.15mm, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, bottomtitle=1mm, bottomrule=.15mm, title={Result 3 (Probit Limit)}, left=2mm, arc=.35mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, opacityback=0, leftrule=.75mm, bottomtitle=1mm, breakable, toprule=.15mm, rightrule=.15mm, opacitybacktitle=0.6, bottomrule=.15mm, left=2mm, title={Result 3 (Probit Limit)}, arc=.35mm, coltitle=black]
 
 As \(\theta \to \infty\), the Variance-Standardized Poisson race
 converges to the Independent Multinomial Probit model. Within the
@@ -783,7 +773,7 @@ accumulation threshold.
 \end{tcolorbox}
 
 \section{Simulation Studies: Binary
-Choice}\label{simulation-studies-binary-choice}
+Choice}\label{sec-binary-simulations}
 
 To illustrate how the Poisson count race family interpolates between
 Logit and Probit, I conducted a simulation study in the binary choice
@@ -819,8 +809,9 @@ threshold simply reduces stochasticity rather than inducing Gaussian
 behavior.
 
 To compare noise \emph{shape} independently of noise \emph{scale}, I
-adopted the variance standardization introduced in Section 5. For binary
-choice, the variance of the utility noise difference is
+adopted the variance standardization introduced in
+Section~\ref{sec-variance-normalization}. For binary choice, the
+variance of the utility noise difference is
 \(\text{Var}(\epsilon_1^{(\theta)} - \epsilon_2^{(\theta)}) = 2\psi_1(\theta)\).
 I therefore define the standardized signal
 \(s = x / \sqrt{2\psi_1(\theta)}\). On this variance-matched axis, the
@@ -870,12 +861,8 @@ two models.}
 
 \end{figure}%
 
-\textsubscript{Source:
-\href{https://venpopov.github.io/logit-probit-poisson-rum/index.qmd.html}{Article
-Notebook}}
-
 \section{Simulation Studies: Multinomial K-alternative
-Choice}\label{simulation-studies-multinomial-k-alternative-choice}
+Choice}\label{sec-multinomial-simulations}
 
 The binary simulation demonstrates that the variance-standardized
 Poisson count race interpolates smoothly between Logit (\(\theta = 1\))
@@ -956,10 +943,6 @@ alternatives K.}
 
 \end{figure}%
 
-\textsubscript{Source:
-\href{https://venpopov.github.io/logit-probit-poisson-rum/index.qmd.html}{Article
-Notebook}}
-
 \subsection{Study 2: Choice Probability
 Vectors}\label{study-2-choice-probability-vectors}
 
@@ -982,10 +965,6 @@ reference; dotted lines: Probit reference.}
 }
 
 \end{figure}%
-
-\textsubscript{Source:
-\href{https://venpopov.github.io/logit-probit-poisson-rum/index.qmd.html}{Article
-Notebook}}
 
 \subsection{Study 3: Set-Size Scaling}\label{study-3-set-size-scaling}
 
@@ -1028,10 +1007,6 @@ references are shown.}
 }
 
 \end{figure}%
-
-\textsubscript{Source:
-\href{https://venpopov.github.io/logit-probit-poisson-rum/index.qmd.html}{Article
-Notebook}}
 
 \subsection{Study 4: Independence of Irrelevant
 Alternatives}\label{study-4-independence-of-irrelevant-alternatives}
@@ -1078,10 +1053,6 @@ Right: percentage change in the ratio when alternative 3 is removed.}
 
 \end{figure}%
 
-\textsubscript{Source:
-\href{https://venpopov.github.io/logit-probit-poisson-rum/index.qmd.html}{Article
-Notebook}}
-
 \subsection{Study 5: Parameter Invariance Across Set
 Size}\label{study-5-parameter-invariance-across-set-size}
 
@@ -1115,10 +1086,6 @@ set size K and accumulation threshold θ.}
 
 \end{figure}%
 
-\textsubscript{Source:
-\href{https://venpopov.github.io/logit-probit-poisson-rum/index.qmd.html}{Article
-Notebook}}
-
 \subsection{Study 6: Distributional Shape --- Noise Skewness and
 Kurtosis}\label{study-6-distributional-shape-noise-skewness-and-kurtosis}
 
@@ -1144,10 +1111,6 @@ standard normal (black dashed).}
 
 \end{figure}%
 
-\textsubscript{Source:
-\href{https://venpopov.github.io/logit-probit-poisson-rum/index.qmd.html}{Article
-Notebook}}
-
 \phantomsection\label{cell-fig-skew-kurtosis}
 \begin{figure}[H]
 
@@ -1165,10 +1128,6 @@ noise shape.}
 }
 
 \end{figure}%
-
-\textsubscript{Source:
-\href{https://venpopov.github.io/logit-probit-poisson-rum/index.qmd.html}{Article
-Notebook}}
 
 \subsection{Study 7: Robustness Across Utility
 Structures}\label{study-7-robustness-across-utility-structures}
@@ -1192,10 +1151,6 @@ uniform, dominant, linear, and clustered.}
 }
 
 \end{figure}%
-
-\textsubscript{Source:
-\href{https://venpopov.github.io/logit-probit-poisson-rum/index.qmd.html}{Article
-Notebook}}
 
 \subsection{Summary}\label{summary}
 
@@ -1247,7 +1202,7 @@ results:
 \end{enumerate}
 
 \section{Extending the Race Model to Correlated
-Errors}\label{extending-the-race-model-to-correlated-errors}
+Errors}\label{sec-correlated-errors}
 
 The core model described thus far restricts the underlying count
 processes to be strictly independent, yielding the Independent
@@ -1311,8 +1266,9 @@ unstandardized random utility errors converge to a Multivariate Normal
 distribution whose covariance scales as
 \(\psi_1(\theta) \rho_{ij} \approx (1/\theta)\rho_{ij}\).
 
-When we apply the variance normalization from Section 4 to enforce
-matched discriminability, we define the standardized noise
+When we apply the variance normalization from
+Section~\ref{sec-variance-normalization} to enforce matched
+discriminability, we define the standardized noise
 \(Z_i^{(\theta)} = (\epsilon_i^{(\theta)} - \mu_\theta) / \sigma_\theta\).
 Because
 \(\sigma_\theta = \sqrt{\psi_1(\theta)} \approx 1/\sqrt{\theta}\) for
@@ -1335,8 +1291,8 @@ Recovery}\label{variance-normalization-and-parameter-recovery}
 
 While the asymptotic proof establishes the theoretical limit, analyzing
 the behavior of the shared-feature model under the variance
-normalization introduced in Section 4 reveals critical boundary
-conditions of evidence accumulation.
+normalization introduced in Section~\ref{sec-variance-normalization}
+reveals critical boundary conditions of evidence accumulation.
 
 To maintain matched discriminability across varying thresholds
 \(\theta\), the systematic utilities \(v_i\) must remain constant while
@@ -1415,7 +1371,7 @@ accumulators sacrifice this interpolation to map the generative model
 onto the exact covariance structures required for general discrete
 choice applications.
 
-\section{Discussion}\label{discussion}
+\section{Discussion}\label{sec-discussion}
 
 The present work develops a generative framework in which Multinomial
 Logit and Multinomial Probit arise as endpoint regimes of a single
@@ -1424,14 +1380,14 @@ Poisson count race and a variance standardization that separates noise
 scale from noise shape, this paper clarifies how extreme-value and
 Gaussian choice behavior emerge as members of the log-Gamma random
 utility family, indexed by the accumulation threshold \(\theta\). As
-discussed in Section 5, this bridge is distributional rather than
-dynamical: the variance standardization compares different accumulation
-systems at matched discriminability, rather than describing the behavior
-of a single system under threshold manipulation. The goal is not to
-advocate replacing existing models, but to clarify their relationship:
-logit and probit represent different positions within a continuum of
-log-Gamma noise shapes, with the accumulation threshold governing the
-transition between them.
+discussed in Section~\ref{sec-variance-normalization}, this bridge is
+distributional rather than dynamical: the variance standardization
+compares different accumulation systems at matched discriminability,
+rather than describing the behavior of a single system under threshold
+manipulation. The goal is not to advocate replacing existing models, but
+to clarify their relationship: logit and probit represent different
+positions within a continuum of log-Gamma noise shapes, with the
+accumulation threshold governing the transition between them.
 
 The multinomial simulations demonstrate that this unification is not
 merely a theoretical curiosity. Thresholded accumulation induces
