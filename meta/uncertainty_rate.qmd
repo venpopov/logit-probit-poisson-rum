@@ -1,0 +1,58 @@
+---
+title: "Poisson rate uncertainty posterior"
+format: html
+---
+
+Basic parameters
+
+```{r}
+true_rate <- 2
+n_events <- 100
+waiting_times <- round(rexp(100, rate = true_rate),3)
+event_times <- cumsum(waiting_times)
+total_time <- sum(waiting_times)
+time_vec <- seq(0, total_time, 0.001)
+```
+
+Define and plot prior belief about possible rates
+
+```{r}
+prior_alpha <- 1
+prior_beta <- 1
+plot(\(x) dgamma(x, shape = prior_alpha, rate = prior_beta), to = 10)
+```
+
+Calculate how mean and variance changes over time and with events
+
+
+```{r}
+count_events_before <- function(t, event_times) {
+  colSums(outer(event_times, t, `<`))
+}
+
+mean_posterior <- function(t, counts, alpha, beta) {
+  (alpha + counts) / (beta + t)
+}
+
+var_posterior <- function(t, counts, alpha, beta) {
+  (alpha + counts) / (beta + t)^2
+}
+
+posterior_smry <- function(t, event_times, alpha, beta) {
+  counts <- count_events_before(t, event_times)
+  data.frame(
+    times = t,
+    mean = mean_posterior(t, counts, alpha, beta), 
+    var = var_posterior(t, counts, alpha, beta)
+  )
+}
+
+posterior <- posterior_smry(
+  time_vec, event_times, alpha = prior_alpha, beta = prior_beta
+)
+
+par(mfrow = c(1, 2))
+plot(posterior$times, posterior$mean, pch = ".")
+plot(posterior$times, posterior$var, pch = ".")
+
+```
