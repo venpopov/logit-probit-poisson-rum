@@ -7,8 +7,8 @@ Basic parameters
 
 ```{r}
 true_rate <- 2
-n_events <- 100
-waiting_times <- round(rexp(100, rate = true_rate),3)
+n_events <- 1000
+waiting_times <- round(rexp(n_events, rate = true_rate),3)
 event_times <- cumsum(waiting_times)
 total_time <- sum(waiting_times)
 time_vec <- seq(0, total_time, 0.001)
@@ -55,4 +55,46 @@ par(mfrow = c(1, 2))
 plot(posterior$times, posterior$mean, pch = ".")
 plot(posterior$times, posterior$var, pch = ".")
 
+```
+
+Plot posterior distributions right before and right after each event
+
+```{r}
+#| label: fig-event-posterior-jumps
+library(ggplot2)
+library(ggdist)
+library(distributional)
+
+build_event_posteriors <- function(event_times, event_indices, alpha, beta) {
+  data.frame(
+    event = rep(seq_along(event_indices), each = 2),
+    timing = rep(c("Before", "After"), times = length(event_indices)),
+    shape = alpha + c(rbind(event_indices - 1, event_indices)),
+    rate = beta + rep(event_times, each = 2)
+  )
+}
+
+plot_indices <- round(seq(1, n_events, length.out = 10))
+plot_event_times <- event_times[plot_indices]
+posterior_events <- build_event_posteriors(plot_event_times, plot_indices, prior_alpha, prior_beta)
+posterior_events$rate_dist <- dist_gamma(
+  shape = posterior_events$shape,
+  rate = posterior_events$rate
+)
+
+ggplot(posterior_events, aes(y = event, xdist = rate_dist, fill = timing, color = timing)) +
+  stat_slab(
+    alpha = 0.5,
+    scale = 1.5,
+    normalize = "panels"
+  ) +
+  scale_y_continuous(
+    breaks = seq_along(plot_indices),
+    labels = paste("Event", plot_indices)
+  ) +
+  labs(
+    x = "Rate",
+    title = "Posterior belief about rate around each event"
+  ) +
+  theme_minimal()
 ```
